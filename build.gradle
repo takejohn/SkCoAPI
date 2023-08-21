@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+}
+
+group = 'io.github.takejohn'
+version = '0.1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "spigotmc-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+    maven {
+        name = "playpro"
+        url = "https://maven.playpro.com/"
+    }
+    maven {
+        name = "skript-repo"
+        url = "https://repo.skriptlang.org/releases"
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains:annotations:24.0.0"
+    implementation "org.eclipse.jdt:org.eclipse.jdt.annotation:1.1.0"
+    compileOnly "org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT"
+    implementation "net.coreprotect:coreprotect:22.0"
+    implementation "com.github.SkriptLang:Skript:2.6.4"
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

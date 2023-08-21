@@ -1,0 +1,9 @@
+name: SkCoAPI
+author: takejohn
+description: An adapter of CodeProtect API v9 for Skript.
+version: '${version}'
+main: io.github.takejohn.skcoapi.SkCoAPI
+depend:
+  - CoreProtect
+  - Skript
+api-version: '1.18'
