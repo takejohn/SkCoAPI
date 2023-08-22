@@ -8,9 +8,9 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 
 ## Minimum Supported Versions
 
-Spigot: 1.18.2 R0.1
-Skript: 2.6.4
-CoreProtect: 22.0
+* Spigot: 1.18.2 R0.1
+* Skript: 2.6.4
+* CoreProtect: 22.0
 
 ## Usage
 
@@ -22,6 +22,8 @@ CoreProtect: 22.0
 ```
 An equivalent to `CoreProtectPreLogEvent`.
 
+---
+
 ### Conditions
 
 #### Is Enabled
@@ -30,11 +32,15 @@ An equivalent to `CoreProtectPreLogEvent`.
 ```
 Calls `isEnabled()`.
 
+---
+
 #### Is Rolled Back
 ```skript
 %coreprotectlog% is[(n't| not)] rolled back
 ```
 Calls `ParseResult.isRolledBack()`.
+
+---
 
 #### Has Placed/Built
 ```skript
@@ -42,11 +48,15 @@ Calls `ParseResult.isRolledBack()`.
 ```
 Calls `hasPlaced()`.
 
+---
+
 #### Has Broken/Removed
 ```skript
 %string% has[(n't | not)] (broken|removed) %block% in [last] %timespan% [(until|till) %-timespan%]
 ```
 Calls `hasRemoved()`.
+
+---
 
 ### Effects
 
@@ -56,11 +66,15 @@ test [the] CoreProtect API
 ```
 Calls `testAPI()`.
 
+---
+
 #### Log Said
 ```skript
 log [that] %string% (said|sent [the] message) %string%
 ```
 Calls `logChat()`.
+
+---
 
 #### Log Executed
 ```skript
@@ -68,11 +82,15 @@ log [that] %player% executed [[the] command] %string%
 ```
 Calls `logCommand()`.
 
+---
+
 #### Log Placed/Built
 ```skript
 log [that] %string% (placed|built) %block data% at %location%
 ```
 Calls `logPlacement()`.
+
+---
 
 #### Log Broke/Removed
 ```skript
@@ -80,17 +98,23 @@ log [that] %string% (broke|removed) %block data% at %location%
 ```
 Calls `logRemoval()`.
 
+---
+
 #### Log Container Transaction
 ```skript
 log [that] %string% made [a] transaction [to [a] container] at %location%
 ```
 Calls `logContainerTransaction()`.
 
+---
+
 #### Log Interaction
 ```skript
 log [that] %string% interacted [[a] block] at %location%
 ```
 Calls `logInteraction()`.
+
+---
 
 ### Expressions
 
@@ -103,6 +127,8 @@ Return Type: Integer
 
 Returns `APIVersion()`.
 
+---
+
 #### User/Player Name
 ```skript
 [the] (user|player) name
@@ -114,6 +140,8 @@ Returns `getUser()`.
 Can be changed which calls `setUser()`.
 This can be referred as `event-string`, which only the getter is provided.
 
+---
+
 #### Lookup
 ```skript
 lookup [action] (data|logs) in [last] %timespan% [for %strings%] [except for %strings%] [on %objects%] [except on %objects%] [with ([an] action|actions) %integers%] [in radius %integer%] [at %location%]
@@ -122,6 +150,8 @@ Return type: CoreProtect Log
 
 Calls `performLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
 Objects specified with `on` and `expect on` can be Entity Types, Item Types or Block Data.
+
+---
 
 #### Rollback
 ```skript
@@ -132,6 +162,8 @@ Return type: CoreProtect Log
 Calls `performRollback()` and returns the CoreProtect logs parsed with `parseResult()`.
 Objects specified with `on` and `expect on` can be Entity Types, Item Types or Block Data.
 
+---
+
 #### Restore
 ```skript
 restore [action] (data|logs) in [last] %timespan% [for %strings%] [except for %strings%] [on %objects%] [except on %objects%] [with ([an] action|actions) %integers%] [in radius %integer%] [at %location%]
@@ -141,6 +173,8 @@ Return type: CoreProtect Log
 Calls `performRestore()` and returns the CoreProtect logs parsed with `parseResult()`.
 Objects specified with `on` and `expect on` can be Entity Data, Entity Types, Item Types or Block Data.
 
+---
+
 #### Lookup Block
 ```skript
 lookup [action] (data|logs) on %block% in [last] %timespan%
@@ -148,6 +182,8 @@ lookup [action] (data|logs) on %block% in [last] %timespan%
 Return type: CoreProtect Log
 
 Calls `blockLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+
+---
 
 #### Lookup Sessions
 ```skript
@@ -157,6 +193,8 @@ Return type: CoreProtect Log
 
 Calls `sessionLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
 
+---
+
 #### Lookup Queue
 ```skript
 lookup [consumer] queue on %block%
@@ -164,6 +202,8 @@ lookup [consumer] queue on %block%
 Return type: CoreProtect Log
 
 Calls `queueLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+
+---
 
 #### Block Coordinate
 ```skript
@@ -176,6 +216,8 @@ Returns `ParseResult.getX()` for the x-coordinate,
 `ParseResult.getY()` for the y-coordinate or altitude,
 or `ParseResult.getZ()` for the z-coordinate.
 
+---
+
 #### Block Type
 ```skript
 [the] block type[s] of %coreprotectlogs%
@@ -184,6 +226,8 @@ or `ParseResult.getZ()` for the z-coordinate.
 Return type: Item Type
 
 Returns `new ItemType(ParseResult.getType())`.
+
+---
 
 #### Logged Block Data
 ```skript
@@ -194,6 +238,8 @@ Return type: Block Data
 
 Returns `ParseResult.getBlockData()`.
 
+---
+
 #### Player Name
 ```skript
 [the] (player|user) name[s] of %coreprotectlogs%
@@ -202,6 +248,8 @@ Returns `ParseResult.getBlockData()`.
 Return type: Text
 
 Returns `ParseResult.getPlayer()`.
+
+---
 
 #### Timestamp
 ```skript
@@ -212,6 +260,8 @@ Return type: Number
 
 Returns `ParseResult.getTimestamp()`.
 
+---
+
 #### Date
 ```skript
 [the] date[s] of %coreprotectlogs%
@@ -220,6 +270,8 @@ Returns `ParseResult.getTimestamp()`.
 Return type: Date
 
 Returns `new Date(ParseResult.getTimestamp())`.
+
+---
 
 #### Action ID
 ```skript
@@ -230,6 +282,8 @@ Return type: Integer
 
 Returns `ParseResult.getActionId()`.
 
+---
+
 #### Action String
 ```skript
 [the] action[ (string|text)][s] of %coreprotectlogs%
@@ -238,6 +292,8 @@ Returns `ParseResult.getActionId()`.
 Return type: Text
 
 Returns `ParseResult.getActionString()`.
+
+---
 
 #### Logged World Name
 ```skript
@@ -248,6 +304,8 @@ Return type: Text
 
 Returns `ParseResult.worldName()`.
 
+---
+
 #### Logged World
 ```skript
 [the] logged world[s] of %coreprotectlogs%
@@ -256,6 +314,8 @@ Returns `ParseResult.worldName()`.
 Return type: World
 
 Returns `Bukkit.getWorld(ParseResult.worldName())`.
+
+---
 
 #### Block Location
 ```skript
@@ -266,10 +326,14 @@ Return type: Location
 
 Returns `new Location(Bukkit.getWorld(ParseResult.worldName()), ParseResult.getX(), ParseResult.getY(), ParseResult.getZ());`.
 
+---
+
 ### Types
 
 #### CoreProtect Log
 A result of lookup on CoreProtect logs.
+
+---
 
 ## Examples
 
@@ -278,17 +342,23 @@ A result of lookup on CoreProtect logs.
 set {_lookup::*} to lookup action logs in 24 hours for "##enderman"
 ```
 
+---
+
 * Get the last 24 hours of block data for endermans excluding dirt and grass blocks.
 ```skript
 set {_exclude::*} to grass and dirt
 set {_lookup::*} to lookup action logs in 24 hours for "##enderman" except on {_exclude::*}
 ```
 
+---
+
 * Add "'s hand" to usernames when logging.
 ```skript
 on CoreProtect logging:
     set user name to "%user name%'s hand"
 ```
+
+---
 
 * When a player executes the command `/lookup`,
   the player sees the last 30 days of block data within 5 blocks of their location.
@@ -300,6 +370,8 @@ trigger:
     send "Lookup results:" to player
     send {_lookup::*} to player
 ```
+
+---
 
 * When a player executes the command `/inspect`,
   the player sees the 30 days of block data on the block they are looking at.
@@ -330,6 +402,8 @@ function action_past(action_id: integer) :: text:
         return "[unknown]"
   ```
 
+---
+
 * When executing the command `/sessions`, get the last 1-day session data for the specified user.
 ```skript
 command /sessions <text>:
@@ -337,6 +411,8 @@ command /sessions <text>:
         set {_lookup::*} to lookup sessions for arg-1 in a day
         send {_lookup::*} to sender
 ```
+
+---
 
 * When a player executes the command `/extinguishedcampfire`,
   place a block with a block data `minecraft:campfire[lit=false]` to the location of the player,
@@ -349,6 +425,8 @@ command /extinguishedcampfire:
         set block at player to {_block}
         log that player's name placed {_block} at location of player
 ```
+
+---
 
 * When a player executes the command `/takeall`,
   move items from a container block to the inventory of the player, and log that they removed items from the container.
@@ -366,3 +444,5 @@ command /takeall:
             remove loop-item from the inventory of {_block}
             log that player's name made a transaction to a container at location of {_block}
 ```
+
+---
