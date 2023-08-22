@@ -446,3 +446,8 @@ command /takeall:
 ```
 
 ---
+
+## License
+
+The source files are distributed under Apache 2.0.
+Detail information is in [`LICENSE`](/LICENSE).
