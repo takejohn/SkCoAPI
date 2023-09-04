@@ -67,6 +67,8 @@ Equivalent: `hasRemoved()`
 
 Checks if a user has already removed a block at the location within the specified time limit.
 
+---
+
 ### Logging Succeeded
 ```skript
 logging (succeeded|did(n't| not) fail|failed|din(n't| not) succeed)
