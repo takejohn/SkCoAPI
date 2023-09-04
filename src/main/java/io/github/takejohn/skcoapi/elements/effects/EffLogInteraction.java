@@ -5,6 +5,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.SkCoAPI;
+import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.Location;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,7 +35,7 @@ public class EffLogInteraction extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        SkCoAPI.coreProtectAPI.logInteraction(user.getSingle(e), location.getSingle(e));
+        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logInteraction(user.getSingle(e), location.getSingle(e)));
     }
 
 }

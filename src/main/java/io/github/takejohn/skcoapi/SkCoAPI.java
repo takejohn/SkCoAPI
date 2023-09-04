@@ -2,10 +2,7 @@ package io.github.takejohn.skcoapi;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.registrations.Classes;
-import io.github.takejohn.skcoapi.elements.conditions.CondEnabled;
-import io.github.takejohn.skcoapi.elements.conditions.CondPlaced;
-import io.github.takejohn.skcoapi.elements.conditions.CondRemoved;
-import io.github.takejohn.skcoapi.elements.conditions.CondRolledBack;
+import io.github.takejohn.skcoapi.elements.conditions.*;
 import io.github.takejohn.skcoapi.elements.effects.*;
 import io.github.takejohn.skcoapi.elements.events.EvtPreLog;
 import io.github.takejohn.skcoapi.elements.expressions.*;
@@ -55,6 +52,7 @@ public final class SkCoAPI extends JavaPlugin {
         EffLogRemoval.register();
         Skript.registerEffect(EffLogContainerTransaction.class, EffLogContainerTransaction.PATTERN);
         Skript.registerEffect(EffLogInteraction.class, EffLogInteraction.PATTERN);
+        CondLoggingSucceeded.register();
         Skript.registerCondition(CondPlaced.class, CondPlaced.PATTERN);
         Skript.registerCondition(CondRemoved.class, CondRemoved.PATTERN);
         Skript.registerEffect(EffPurge.class, EffPurge.PATTERN);

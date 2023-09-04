@@ -5,6 +5,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.SkCoAPI;
+import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -34,7 +35,7 @@ public class EffLogChat extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        SkCoAPI.coreProtectAPI.logChat(player.getSingle(e), message.getSingle(e));
+        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logChat(player.getSingle(e), message.getSingle(e)));
     }
 
 }
