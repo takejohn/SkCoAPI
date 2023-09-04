@@ -10,7 +10,7 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 
 * Spigot: 1.18.2 R0.1
 * Skript: 2.6.4
-* CoreProtect: 22.0
+* CoreProtect: 22.1
 
 ## Usage
 
@@ -20,7 +20,10 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 ```skript
 [on] CoreProtect log[ging] [(for %strings%|[an] action [by %strings%])]
 ```
-An equivalent to `CoreProtectPreLogEvent`.
+Equivalent: `CoreProtectPreLogEvent`
+
+Fired when a CoreProtect logger is about to log an action.
+Cancellable.
 
 ---
 
@@ -30,7 +33,9 @@ An equivalent to `CoreProtectPreLogEvent`.
 ```skript
 [the] CoreProtect API is[(n't| not)] (enabled|disabled)
 ```
-Calls `isEnabled()`.
+Equivalent: `isEnabled()`
+
+Checks if the server has the CoreProtect API enabled, and false if it does not.
 
 ---
 
@@ -38,7 +43,9 @@ Calls `isEnabled()`.
 ```skript
 %coreprotectlog% is[(n't| not)] rolled back
 ```
-Calls `ParseResult.isRolledBack()`.
+Equivalent: `ParseResult.isRolledBack()`
+
+Checks If the block is currently rolled back or not.
 
 ---
 
@@ -46,7 +53,9 @@ Calls `ParseResult.isRolledBack()`.
 ```skript
 %string% has[(n't | not)] (placed|built) %block% in[ last] %timespan% [(until|till) %-timespan%]
 ```
-Calls `hasPlaced()`.
+Equivalent: `hasPlaced()`
+
+Checks if a user has already placed a block at the location within the specified time limit.
 
 ---
 
@@ -54,7 +63,16 @@ Calls `hasPlaced()`.
 ```skript
 %string% has[(n't | not)] (broken|removed) %block% in [last] %timespan% [(until|till) %-timespan%]
 ```
-Calls `hasRemoved()`.
+Equivalent: `hasRemoved()`
+
+Checks if a user has already removed a block at the location within the specified time limit.
+
+### Logging Succeeded
+```skript
+logging (succeeded|did(n't| not) fail|failed|din(n't| not) succeed)
+```
+
+Checks if the log said/executed/placed/broke/container transaction/interaction effect lastly ran was successful.
 
 ---
 
@@ -64,7 +82,9 @@ Calls `hasRemoved()`.
 ```skript
 test [the] CoreProtect API
 ```
-Calls `testAPI()`.
+Equivalent: `testAPI()`
+
+Prints out "[CoreProtect] API Test Successful." in the server console.
 
 ---
 
@@ -72,7 +92,7 @@ Calls `testAPI()`.
 ```skript
 log [that] %string% (said|sent [the] message) %string%
 ```
-Calls `logChat()`.
+Equivalent: `logChat()`
 
 ---
 
@@ -80,7 +100,7 @@ Calls `logChat()`.
 ```skript
 log [that] %player% executed [[the] command] %string%
 ```
-Calls `logCommand()`.
+Equivalent: `logCommand()`
 
 ---
 
@@ -88,7 +108,9 @@ Calls `logCommand()`.
 ```skript
 log [that] %string% (placed|built) %block data% at %location%
 ```
-Calls `logPlacement()`.
+Equivalent: `logPlacement()`
+
+Logs a block as being placed.
 
 ---
 
@@ -96,7 +118,9 @@ Calls `logPlacement()`.
 ```skript
 log [that] %string% (broke|removed) %block data% at %location%
 ```
-Calls `logRemoval()`.
+Equivalent: `logRemoval()`
+
+Logs a block as being removed/broken, and log the block's inventory (if applicable).
 
 ---
 
@@ -104,7 +128,9 @@ Calls `logRemoval()`.
 ```skript
 log [that] %string% made [a] transaction [to [a] container] at %location%
 ```
-Calls `logContainerTransaction()`.
+Equivalent: `logContainerTransaction()`
+
+Logs any transactions made to a block's inventory immediately after calling the method.
 
 ---
 
@@ -112,7 +138,9 @@ Calls `logContainerTransaction()`.
 ```skript
 log [that] %string% interacted [[a] block] at %location%
 ```
-Calls `logInteraction()`.
+Equivalent: `logInteraction()`
+
+Logs a block as having been interacted with.
 
 ---
 
@@ -125,7 +153,7 @@ Calls `logInteraction()`.
 ```
 Return Type: Integer
 
-Returns `APIVersion()`.
+Equivalent: `APIVersion()`
 
 ---
 
@@ -135,9 +163,10 @@ Returns `APIVersion()`.
 ```
 Return Type: Text
 
+Equivalent: `CoreProtectPreLogEvent.getUser()`, `CoreProtectPreLogEvent.setUser()`
+
 Usable only in CoreProtect logging event.
-Returns `getUser()`.
-Can be changed which calls `setUser()`.
+This value can be changed.
 This can be referred as `event-string`, which only the getter is provided.
 
 ---
@@ -148,7 +177,9 @@ lookup [action] (data|logs) in [last] %timespan% [for %strings%] [except for %st
 ```
 Return type: CoreProtect Log
 
-Calls `performLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+Equivalent: Every element of `performLookup()` parsed by `parseResult()`
+
+Performs a lookup.
 Objects specified with `on` and `expect on` can be Entity Types, Item Types or Block Data.
 
 ---
@@ -159,7 +190,10 @@ rollback [action] (data|logs) in [last] %timespan% [for %strings%] [except for %
 ```
 Return type: CoreProtect Log
 
-Calls `performRollback()` and returns the CoreProtect logs parsed with `parseResult()`.
+Equivalent: Every element of `performRollback()` parsed by `parseResult()`
+
+Performs a rollback.
+Must be called async.
 Objects specified with `on` and `expect on` can be Entity Types, Item Types or Block Data.
 
 ---
@@ -170,6 +204,9 @@ restore [action] (data|logs) in [last] %timespan% [for %strings%] [except for %s
 ```
 Return type: CoreProtect Log
 
+Equivalent: Every element of `performRestore()` parsed by `parseResult()`
+
+Performs a restore.
 Calls `performRestore()` and returns the CoreProtect logs parsed with `parseResult()`.
 Objects specified with `on` and `expect on` can be Entity Data, Entity Types, Item Types or Block Data.
 
@@ -181,7 +218,9 @@ lookup [action] (data|logs) on %block% in [last] %timespan%
 ```
 Return type: CoreProtect Log
 
-Calls `blockLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+Equivalent: Every element of `blockLookup()` parsed by `parseResult()`
+
+Performs a full lookup on a single block.
 
 ---
 
@@ -191,7 +230,9 @@ lookup session[s] [(data|logs)] for %string% in[ last] %timespan%
 ```
 Return type: CoreProtect Log
 
-Calls `sessionLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+Equivalent: Every element of `sessionLookup()` parsed by `parseResult()`
+
+Performs a session lookup on a single player.
 
 ---
 
@@ -201,7 +242,9 @@ lookup [consumer] queue on %block%
 ```
 Return type: CoreProtect Log
 
-Calls `queueLookup()` and returns the CoreProtect logs parsed with `parseResult()`.
+Equivalent: Every element of `queueLookup()` parsed by `parseResult()`
+
+Searches the consumer queue for changes on a block not yet saved in the database.
 
 ---
 
@@ -212,9 +255,10 @@ Calls `queueLookup()` and returns the CoreProtect logs parsed with `parseResult(
 ```
 Return type: Integer
 
-Returns `ParseResult.getX()` for the x-coordinate,
-`ParseResult.getY()` for the y-coordinate or altitude,
-or `ParseResult.getZ()` for the z-coordinate.
+Equivalents: `ParseResult.getX()`, `ParseResult.getY()`, `ParseResult.getZ()`
+
+The X/Y/Z coordinate of the block.
+`block altitude` is an alias of `block y-coordinate`.
 
 ---
 
@@ -225,7 +269,9 @@ or `ParseResult.getZ()` for the z-coordinate.
 ```
 Return type: Item Type
 
-Returns `new ItemType(ParseResult.getType())`.
+Equivalent: `new ItemType(ParseResult.getType())`
+
+The Material of the block.
 
 ---
 
@@ -236,7 +282,9 @@ Returns `new ItemType(ParseResult.getType())`.
 ```
 Return type: Block Data
 
-Returns `ParseResult.getBlockData()`.
+Equivalent: `ParseResult.getBlockData()`
+
+The BlockData of the block.
 
 ---
 
@@ -247,7 +295,9 @@ Returns `ParseResult.getBlockData()`.
 ```
 Return type: Text
 
-Returns `ParseResult.getPlayer()`.
+Equivalent: `ParseResult.getPlayer()`
+
+The username as a string.
 
 ---
 
@@ -258,7 +308,9 @@ Returns `ParseResult.getPlayer()`.
 ```
 Return type: Number
 
-Returns `ParseResult.getTimestamp()`.
+Equivalent: `ParseResult.getTimestamp()`
+
+The time of the action.
 
 ---
 
@@ -269,7 +321,9 @@ Returns `ParseResult.getTimestamp()`.
 ```
 Return type: Date
 
-Returns `new Date(ParseResult.getTimestamp())`.
+Equivalent: `new Date(ParseResult.getTimestamp())`
+
+The time of the action.
 
 ---
 
@@ -280,7 +334,9 @@ Returns `new Date(ParseResult.getTimestamp())`.
 ```
 Return type: Integer
 
-Returns `ParseResult.getActionId()`.
+Equivalent: `ParseResult.getActionId()`
+
+Get the action ID. (0=removed, 1=placed, 2=interaction)
 
 ---
 
@@ -291,7 +347,9 @@ Returns `ParseResult.getActionId()`.
 ```
 Return type: Text
 
-Returns `ParseResult.getActionString()`.
+Equivalent: `ParseResult.getActionString()`
+
+Get the action as a string. (Removal, Placement, Interaction)
 
 ---
 
@@ -302,7 +360,9 @@ Returns `ParseResult.getActionString()`.
 ```
 Return type: Text
 
-Returns `ParseResult.worldName()`.
+Equivalent: `ParseResult.worldName()`
+
+The name of the world the block is located in.
 
 ---
 
@@ -313,7 +373,9 @@ Returns `ParseResult.worldName()`.
 ```
 Return type: World
 
-Returns `Bukkit.getWorld(ParseResult.worldName())`.
+Equivalent: `Bukkit.getWorld(ParseResult.worldName())`
+
+The world the block is located in.
 
 ---
 
@@ -324,7 +386,9 @@ Returns `Bukkit.getWorld(ParseResult.worldName())`.
 ```
 Return type: Location
 
-Returns `new Location(Bukkit.getWorld(ParseResult.worldName()), ParseResult.getX(), ParseResult.getY(), ParseResult.getZ());`.
+Equivalent: `new Location(Bukkit.getWorld(ParseResult.worldName()), ParseResult.getX(), ParseResult.getY(), ParseResult.getZ());`
+
+The location of the block.
 
 ---
 
