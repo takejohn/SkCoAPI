@@ -23,7 +23,7 @@ public class ExprBlockLocation extends LogPropertyExpression<Location> {
     @Override
     public @Nullable Location convert(CoreProtectAPI.ParseResult parseResult) {
         return new Location(Bukkit.getWorld(parseResult.worldName()),
-                parseResult.getX(), parseResult.getY(), parseResult.getZ());
+                parseResult.getX() + 0.5, parseResult.getY() + 0.5, parseResult.getZ() + 0.5);
     }
 
     public static void register() {
