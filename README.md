@@ -8,7 +8,7 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 
 ## Minimum Supported Versions
 
-* Spigot: 1.18.2 R0.1
+* Spigot: 1.15 R0.1
 * Skript: 2.6.4
 * CoreProtect: 22.1
 
