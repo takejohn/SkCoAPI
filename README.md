@@ -513,6 +513,24 @@ command /takeall:
 
 ---
 
+* A function which returns true if the user has already placed the block within the specified time.
+```skript
+function has_placed(p: string, b: block, t: timespan) :: boolean:
+    if {_p} has placed {_b} in {_t}:
+        return true
+    else:
+        set {_lookup::*} to lookup queue on {_b}
+        loop {_lookup::*}:
+            set {_action} to action id of loop-value
+            if {_action} is 1:
+                set {_name} to player name of loop-value
+                if {_name} is {_p}:
+                    return true
+    return false
+```
+
+---
+
 ## License
 
 The source files are distributed under Apache 2.0.
