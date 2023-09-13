@@ -1,10 +1,16 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
-import io.github.takejohn.skcoapi.SkCoAPI;
+import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.ExpressionType;
+import ch.njol.skript.lang.SkriptParser;
+import ch.njol.util.Kleenean;
+import io.github.takejohn.skcoapi.util.DetailPerformance;
+import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,23 +24,32 @@ import java.util.List;
 })
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
-public class ExprLookup extends DetailPerformExpression {
+public class ExprLookup extends PerformExpression {
 
-    public static final String VERB = "lookup";
+    private static final DetailPerformance LOOKUP = DetailPerformance.LOOKUP;
+
+    private DetailPerformance.OptionExpressions opt;
+
+    @Override
+    public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed,
+                        SkriptParser.@NotNull ParseResult parseResult) {
+        opt = new DetailPerformance.OptionExpressions(exprs);
+        return true;
+    }
 
     @Override
     public @NotNull String toString(@org.eclipse.jdt.annotation.Nullable Event e, boolean debug) {
-        return toString(e, debug, VERB);
+        return LOOKUP.toString(opt, e, debug);
     }
 
     @Override
     protected @Nullable List<String[]> perform(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.performLookup(timeAsSeconds(e), restrictUserList(e), excludeUserList(e),
-                restrictBlockList(e), excludeBlockList(e), getActionList(e), getRadius(e), getRadiusLocation(e));
+        return LOOKUP.perform(opt, e);
     }
 
     public static void register() {
-        registerWithVerb(ExprLookup.class, VERB);
+        Skript.registerExpression(ExprLookup.class, CoreProtectAPI.ParseResult.class, ExpressionType.COMBINED,
+                LOOKUP.syntaxPattern());
     }
 
 }
