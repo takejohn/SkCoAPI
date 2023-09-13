@@ -1,10 +1,18 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.data.BlockData;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Logged Block Data")
+@Description("The BlockData of the block.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class ExprLoggedBlockData extends LogPropertyExpression<BlockData> {
 
     private static final String PROPERTY_NAME = "logged block data[s]";

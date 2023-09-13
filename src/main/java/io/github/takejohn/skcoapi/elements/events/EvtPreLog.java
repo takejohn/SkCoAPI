@@ -1,6 +1,10 @@
 package io.github.takejohn.skcoapi.elements.events;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +15,13 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("On CoreProtect Logging")
+@Description({
+        "Fired when a CoreProtect logger is about to log an action.",
+        "Cancellable."
+})
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class EvtPreLog extends SkriptEvent {
 
     public static final String PATTERN = "CoreProtect log[ging] [(for %-strings%|[an] action [by %-strings%])]";

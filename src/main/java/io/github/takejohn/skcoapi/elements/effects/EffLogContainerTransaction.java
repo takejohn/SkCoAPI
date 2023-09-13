@@ -1,5 +1,9 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -11,6 +15,10 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Log Container Transaction")
+@Description("Logs any transactions made to a block's inventory immediately after calling the method.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class EffLogContainerTransaction extends Effect {
 
     public static final String PATTERN = "log[ that] %string% made[ a] transaction[ to[ a] container] at %location%";

@@ -1,9 +1,20 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import net.coreprotect.CoreProtectAPI;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Block Coordinate")
+@Description({
+        "The X/Y/Z coordinate of the block.",
+        "`block altitude` is an alias of `block y-coordinate`."
+})
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class ExprBlockXCoordinate extends LogPropertyExpression<Integer> {
 
     private static final String PROPERTY_NAME = "block x(-| )(coord[inate]|pos[ition]|loc[ation])[s]";

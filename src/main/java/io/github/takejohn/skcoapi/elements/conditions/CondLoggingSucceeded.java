@@ -1,6 +1,10 @@
 package io.github.takejohn.skcoapi.elements.conditions;
 
 import ch.njol.skript.Skript;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
@@ -8,6 +12,10 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Logging Succeeded")
+@Description("Checks if the log said/executed/placed/broke/container transaction/interaction effect lastly ran was successful.")
+@Since("0.2.0")
+@RequiredPlugins("CoreProtect")
 public class CondLoggingSucceeded extends NegatableCondition {
 
     private static final String[] PATTERNS = {

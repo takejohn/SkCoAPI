@@ -2,6 +2,7 @@ package io.github.takejohn.skcoapi.elements.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
@@ -13,6 +14,16 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("User/Player Name")
+@Events("CoreProtect logging")
+@Description({
+        "Usable only in CoreProtect logging event.",
+        "The name of the user under which this action will be logged.",
+        "This value can be changed.",
+        "This can be referred as `event-string`, which only the getter is provided."
+})
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class ExprPreLogUserName extends SimpleExpression<String> {
 
     public static final String PATTERN = "[the ](user|player) name";

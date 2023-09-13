@@ -1,5 +1,9 @@
 package io.github.takejohn.skcoapi.elements.conditions;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
@@ -8,6 +12,10 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
+@Name("CoreProtect Is Enabled")
+@Description("Checks if the server has the CoreProtect API enabled, and false if it does not.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class CondEnabled extends NegatableCondition {
 
     public static final String PATTERN =

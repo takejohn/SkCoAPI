@@ -1,5 +1,9 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.event.Event;
@@ -8,6 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+@Name("Log Placement")
+@Description("Logs a block as being placed.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class EffLogPlacement extends LogBlockUpdateEffect {
 
     private static final String ACTION_VERB = "(placed|built)";

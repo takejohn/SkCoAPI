@@ -1,5 +1,9 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
@@ -8,6 +12,10 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
+@Name("Test CoreProtect API")
+@Description("Prints out \"[CoreProtect] API Test Successful.\" in the server console.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class EffTestAPI extends Effect {
 
     public static final String PATTERN = "test [the] CoreProtect API";

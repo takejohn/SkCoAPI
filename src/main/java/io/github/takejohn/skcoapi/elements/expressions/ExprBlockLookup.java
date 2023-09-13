@@ -1,5 +1,9 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Timespan;
@@ -14,6 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
+@Name("Lookup On Block")
+@Description("Performs a full lookup on a single block.")
+@Since("0.1.0")
+@RequiredPlugins("CoreProtect")
 public class ExprBlockLookup extends PerformExpression {
 
     public static final String PATTERN = "lookup[ action] (data|logs) on %block% in[ last] %timespan%";
