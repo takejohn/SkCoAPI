@@ -3,7 +3,7 @@ package io.github.takejohn.skcoapi.elements.expressions;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleExpression;
-import io.github.takejohn.skcoapi.SkCoAPI;
+import io.github.takejohn.skcoapi.util.ParseResults;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
@@ -25,16 +25,7 @@ public abstract class PerformExpression extends SimpleExpression<CoreProtectAPI.
 
     @Override
     protected final @org.eclipse.jdt.annotation.Nullable CoreProtectAPI.ParseResult[] get(@NotNull Event e) {
-        final @Nullable List<String[]> results = perform(e);
-        if (results == null) {
-            return null;
-        }
-        final int resultsSize = results.size();
-        final CoreProtectAPI.ParseResult[] parseResults = new CoreProtectAPI.ParseResult[resultsSize];
-        for (int i = 0 ; i < resultsSize ; i++) {
-            parseResults[i] = SkCoAPI.coreProtectAPI.parseResult(results.get(i));
-        }
-        return parseResults;
+        return ParseResults.parseResults(perform(e));
     }
 
     protected abstract @Nullable List<String[]> perform(@NotNull Event e);
