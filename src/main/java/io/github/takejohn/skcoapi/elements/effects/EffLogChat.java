@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class EffLogChat extends Effect {
 
-    public static final String PATTERN = "log[ that] %string% (said|sent[ the] message) %string%";
+    public static final String PATTERN = "log[ that] %player% (said|sent[ the] message) %string%";
 
     private Expression<Player> player;
 
