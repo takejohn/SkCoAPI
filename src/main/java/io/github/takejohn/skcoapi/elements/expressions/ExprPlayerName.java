@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprPlayerName extends LogPropertyExpression<String> {
 
-    private static final String PROPERTY_NAME = "(player|user) name[s]";
+    private static final String PROPERTY_NAME = "(player |user[ ])name[s]";
 
     @Override
     protected @NotNull String getPropertyName() {
