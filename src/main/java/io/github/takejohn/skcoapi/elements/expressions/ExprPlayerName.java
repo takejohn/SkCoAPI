@@ -5,7 +5,7 @@ import net.coreprotect.CoreProtectAPI;
 import org.eclipse.jdt.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-@Name("Player Name")
+@Name("User/Player Name of Log")
 @Description("The username as a string.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
