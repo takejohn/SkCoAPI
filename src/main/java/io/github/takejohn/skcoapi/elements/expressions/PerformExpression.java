@@ -34,4 +34,8 @@ public abstract class PerformExpression extends SimpleExpression<CoreProtectAPI.
         Skript.registerExpression(c, CoreProtectAPI.ParseResult.class, ExpressionType.COMBINED, pattern);
     }
 
+    public static void register(@NotNull Class<? extends PerformExpression>c, ExpressionType type, @NotNull String pattern) {
+        Skript.registerExpression(c, CoreProtectAPI.ParseResult.class, type, pattern);
+    }
+
 }
