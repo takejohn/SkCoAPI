@@ -1,11 +1,13 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
@@ -23,6 +25,8 @@ public class EffPurge extends Effect {
 
     public static final String PATTERN = "(purge|delete)[ (any|all)] CoreProtect (data|logs) older than %timespan%";
 
+    private static final Timespan TWENTY_FOUR_HOURS = new Timespan(1000L * 60L * 60L * 24L);
+
     private Expression<Timespan> time;
 
     @SuppressWarnings("unchecked")
@@ -30,6 +34,9 @@ public class EffPurge extends Effect {
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed,
                         SkriptParser.@NotNull ParseResult parseResult) {
         time = (Expression<Timespan>)exprs[0];
+        if (time instanceof Literal && ((Literal<Timespan>)time).getSingle().compareTo(TWENTY_FOUR_HOURS) < 0) {
+            Skript.warning("You can only purge data older than 24 hours.");
+        }
         return true;
     }
 
