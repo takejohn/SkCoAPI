@@ -5,12 +5,9 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import io.github.takejohn.skcoapi.SkCoAPI;
-import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
-import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 
 @Name("Log Placement")
 @Description("Logs a block as being placed.")
@@ -21,15 +18,13 @@ public class EffLogPlacement extends LogBlockUpdateEffect {
     private static final String ACTION_VERB = "(placed|built)";
 
     @Override
-    public @NotNull String toString(@Nullable Event e, boolean debug) {
-        return toString(e, debug, ACTION_VERB);
+    protected String actionVerb() {
+        return ACTION_VERB;
     }
 
     @Override
-    protected void execute(@NotNull Event e) {
-        final @NotNull Object singleTypeOrBlockData = Objects.requireNonNull(typeOrBlockData.getSingle(e));
-        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logPlacement(user.getSingle(e), location.getSingle(e),
-                getType(singleTypeOrBlockData), getBlockData(singleTypeOrBlockData)));
+    protected boolean log(String user, Location location, Material type, BlockData blockData) {
+        return SkCoAPI.coreProtectAPI.logPlacement(user, location, type, blockData);
     }
 
     public static void register() {

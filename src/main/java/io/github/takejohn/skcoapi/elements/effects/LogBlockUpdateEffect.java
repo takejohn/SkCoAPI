@@ -5,6 +5,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -30,16 +31,32 @@ public abstract class LogBlockUpdateEffect extends Effect {
         return true;
     }
 
-    public @NotNull String toString(@org.eclipse.jdt.annotation.Nullable Event e, boolean debug, @NotNull String actionVerb) {
-        return "log that " + user.toString(e, debug) + " " + actionVerb + " " + typeOrBlockData.toString(e, debug) +
+    @Override
+    public @NotNull String toString(@org.eclipse.jdt.annotation.Nullable Event e, boolean debug) {
+        return "log that " + user.toString(e, debug) + " " + actionVerb() + " " + typeOrBlockData.toString(e, debug) +
                 " at " + location.toString(e, debug);
     }
 
-    public static void registerWithVerb(Class<? extends LogBlockUpdateEffect> c, @NotNull String actionVerb) {
+    protected abstract String actionVerb();
+
+    protected static void registerWithVerb(Class<? extends LogBlockUpdateEffect> c, @NotNull String actionVerb) {
         Skript.registerEffect(c, "log[ that] %string% " + actionVerb + " %material/blockdata% at %location%");
     }
 
-    protected @NotNull Material getType(@NotNull Object typeOrBlockData) {
+    @Override
+    protected void execute(@NotNull Event e) {
+        final @Nullable Object singleTypeOrBlockData = typeOrBlockData.getSingle(e);
+        if (singleTypeOrBlockData != null) {
+            CondLoggingSucceeded.set(log(user.getSingle(e), location.getSingle(e), getType(singleTypeOrBlockData),
+                    getBlockData(singleTypeOrBlockData)));
+        } else {
+            CondLoggingSucceeded.set(false);
+        }
+    }
+
+    protected abstract boolean log(String user, Location location, Material type, BlockData blockData);
+
+    private @NotNull Material getType(@NotNull Object typeOrBlockData) {
         if (typeOrBlockData instanceof Material) {
             return (Material)typeOrBlockData;
         } else {
@@ -47,7 +64,7 @@ public abstract class LogBlockUpdateEffect extends Effect {
         }
     }
 
-    protected static @Nullable BlockData getBlockData(@NotNull Object typeOrBlockData) {
+    private static @Nullable BlockData getBlockData(@NotNull Object typeOrBlockData) {
         if (typeOrBlockData instanceof BlockData) {
             return (BlockData)typeOrBlockData;
         } else {
