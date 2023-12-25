@@ -6,6 +6,9 @@ import io.github.takejohn.skcoapi.elements.conditions.*;
 import io.github.takejohn.skcoapi.elements.effects.*;
 import io.github.takejohn.skcoapi.elements.events.EvtPreLog;
 import io.github.takejohn.skcoapi.elements.expressions.*;
+import io.github.takejohn.skcoapi.elements.sections.EffSecLookup;
+import io.github.takejohn.skcoapi.elements.sections.EffSecRestore;
+import io.github.takejohn.skcoapi.elements.sections.EffSecRollback;
 import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -15,12 +18,17 @@ import net.coreprotect.CoreProtectAPI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public final class SkCoAPI extends JavaPlugin {
 
     public static final @NotNull CoreProtectAPI coreProtectAPI = getCoreProtectAPI();
 
+    private static SkCoAPI plugin;
+
     @Override
     public void onEnable() {
+        plugin = this;
         Skript.registerAddon(this);
         Classes.registerClass(CoreProtectLogs.classInfo());
         ExprBlockXCoordinate.register();
@@ -41,13 +49,13 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerCondition(CondEnabled.class, CondEnabled.PATTERN);
         Skript.registerEffect(EffTestAPI.class, EffTestAPI.PATTERN);
         ExprLookup.register();
-        EffLookup.register();
+        EffSecLookup.register();
         ExprLastLookedUpLogs.register();
         ExprRollback.register();
-        EffRollback.register();
+        EffSecRollback.register();
         ExprLastRolledBackLogs.register();
         ExprRestore.register();
-        EffRestore.register();
+        EffSecRestore.register();
         ExprLastRestoredLogs.register();
         ExprBlockLookup.register();
         ExprSessionLookup.register();
@@ -64,6 +72,14 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerEffect(EffPurge.class, EffPurge.PATTERN);
         EvtPreLog.register();
         ExprPreLogUserName.register();
+    }
+
+    public static void runTask(Runnable runnable) {
+        Bukkit.getScheduler().runTask(plugin, runnable);
+    }
+
+    public static void runTaskAsynchronously(Runnable runnable) {
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
     }
 
     private static @NotNull CoreProtectAPI getCoreProtectAPI() {
