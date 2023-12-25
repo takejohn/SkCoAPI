@@ -10,15 +10,13 @@ import io.github.takejohn.skcoapi.elements.sections.EffSecLookup;
 import io.github.takejohn.skcoapi.elements.sections.EffSecRestore;
 import io.github.takejohn.skcoapi.elements.sections.EffSecRollback;
 import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
+import net.coreprotect.CoreProtect;
+import net.coreprotect.CoreProtectAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import net.coreprotect.CoreProtect;
-import net.coreprotect.CoreProtectAPI;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public final class SkCoAPI extends JavaPlugin {
 
