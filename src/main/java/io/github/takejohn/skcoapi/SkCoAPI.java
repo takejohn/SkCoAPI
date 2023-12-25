@@ -48,11 +48,8 @@ public final class SkCoAPI extends JavaPlugin {
         ExprBlockLocation.register();
         Skript.registerCondition(CondEnabled.class, CondEnabled.PATTERN);
         Skript.registerEffect(EffTestAPI.class, EffTestAPI.PATTERN);
-        ExprLookup.register();
         EffSecLookup.register();
-        ExprRollback.register();
         EffSecRollback.register();
-        ExprRestore.register();
         EffSecRestore.register();
         ExprBlockLookup.register();
         ExprSessionLookup.register();
