@@ -24,7 +24,7 @@ public abstract class PerformExpression extends SimpleExpression<CoreProtectAPI.
     }
 
     @Override
-    protected final @org.eclipse.jdt.annotation.Nullable CoreProtectAPI.ParseResult[] get(@NotNull Event e) {
+    protected final CoreProtectAPI.@NotNull ParseResult @NotNull[] get(@NotNull Event e) {
         return ParseResults.parseResults(perform(e));
     }
 
