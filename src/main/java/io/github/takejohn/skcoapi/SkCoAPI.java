@@ -50,13 +50,10 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerEffect(EffTestAPI.class, EffTestAPI.PATTERN);
         ExprLookup.register();
         EffSecLookup.register();
-        ExprLastLookedUpLogs.register();
         ExprRollback.register();
         EffSecRollback.register();
-        ExprLastRolledBackLogs.register();
         ExprRestore.register();
         EffSecRestore.register();
-        ExprLastRestoredLogs.register();
         ExprBlockLookup.register();
         ExprSessionLookup.register();
         ExprQueueLookup.register();
