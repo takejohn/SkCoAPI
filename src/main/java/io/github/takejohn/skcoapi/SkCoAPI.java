@@ -49,6 +49,7 @@ public final class SkCoAPI extends JavaPlugin {
         EffSecLookup.register();
         EffSecRollback.register();
         EffSecRestore.register();
+        ExprResults.register();
         ExprBlockLookup.register();
         ExprSessionLookup.register();
         ExprQueueLookup.register();

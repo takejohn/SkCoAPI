@@ -49,8 +49,8 @@ public abstract class PerformanceEffectSection extends EffectSection {
     }
 
     protected @NotNull Event execute(@NotNull Event formerEvent) {
-        ParseResults.parseResults(performance().perform(opt, formerEvent));
-        return new CoreProtectPerformanceCompleteEvent();
+        return new CoreProtectPerformanceCompleteEvent(
+                ParseResults.parseResults(performance().perform(opt, formerEvent)));
     }
 
     @Override
