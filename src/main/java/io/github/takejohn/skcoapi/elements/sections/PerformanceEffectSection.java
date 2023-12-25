@@ -59,20 +59,23 @@ public abstract class PerformanceEffectSection extends EffectSection {
     }
 
     private void asynchronousTask(@NotNull Event e, @Nullable Object localVariables) {
-        if (localVariables != null) {
-            Variables.setLocalVariables(e, localVariables);
-        }
+        Variables.setLocalVariables(e, localVariables);
         final @NotNull Event laterEvent = execute(e);
         if (getNext() != null) {
             SkCoAPI.runTask(() -> synchronouslyNext(e, laterEvent));
+        } else {
+            Variables.removeLocals(e);
         }
     }
 
     private void synchronouslyNext(@NotNull Event formerEvent, @NotNull Event laterEvent) {
-        if (innerTrigger != null) {
-            innerTrigger.execute(laterEvent);
-        }
         final Object timing = startTiming();
+        if (innerTrigger != null) {
+            final Object innerLocalVariables = Variables.copyLocalVariables(formerEvent);
+            Variables.setLocalVariables(laterEvent, innerLocalVariables);
+            TriggerItem.walk(innerTrigger, laterEvent);
+            Variables.setLocalVariables(formerEvent, Variables.removeLocals(laterEvent));
+        }
         TriggerItem.walk(Objects.requireNonNull(getNext()), formerEvent);
         Variables.removeLocals(formerEvent);
         SkriptTimings.stop(timing);
