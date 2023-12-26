@@ -23,7 +23,7 @@ import java.util.Objects;
 @RequiredPlugins("CoreProtect")
 public class ExprSessionLookup extends PerformExpression {
 
-    public static final String PATTERN = "lookup session[s][ (data|logs)] for %string% in[ last] %timespan%";
+    public static final String PATTERN = "lookup session[s] [(data|logs)] for %string% in [last] %timespan%";
 
     private Expression<String> user;
 

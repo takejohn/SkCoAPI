@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredPlugins("CoreProtect")
 public class ExprQueueLookup extends PerformExpression {
 
-    public static final String PATTERN = "lookup[ consumer] queue on %block%";
+    public static final String PATTERN = "lookup [consumer] queue on %block%";
 
     private Expression<Block> block;
 

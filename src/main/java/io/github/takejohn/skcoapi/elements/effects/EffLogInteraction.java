@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class EffLogInteraction extends Effect {
 
-    public static final String PATTERN = "log[ that] %string% interacted[[ a] block] at %location%";
+    public static final String PATTERN = "log [that] %string% interacted [[a] block] at %location%";
 
     private Expression<String> user;
 

@@ -22,8 +22,8 @@ import org.jetbrains.annotations.NotNull;
 public class ExprAPIVersion extends SimpleExpression<Integer> {
 
     protected static final String[] PATTERNS = new String[]{
-            "[the ]CoreProtect API['s] version",
-            "[the ]version of CoreProtect API"
+            "[the] CoreProtect API['s] version",
+            "[the] version of CoreProtect API"
     };
 
     @Override

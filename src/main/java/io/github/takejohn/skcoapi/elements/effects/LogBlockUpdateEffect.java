@@ -40,7 +40,7 @@ public abstract class LogBlockUpdateEffect extends Effect {
     protected abstract String actionVerb();
 
     protected static void registerWithVerb(Class<? extends LogBlockUpdateEffect> c, @NotNull String actionVerb) {
-        Skript.registerEffect(c, "log[ that] %string% " + actionVerb + " %material/blockdata% at %location%");
+        Skript.registerEffect(c, "log [that] %string% " + actionVerb + " %material/blockdata% at %location%");
     }
 
     @Override

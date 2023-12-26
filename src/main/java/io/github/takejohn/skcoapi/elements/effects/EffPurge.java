@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class EffPurge extends Effect {
 
-    public static final String PATTERN = "(purge|delete)[ (any|all)] CoreProtect (data|logs) older than %timespan%";
+    public static final String PATTERN = "(purge|delete) [(any|all)] CoreProtect (data|logs) older than %timespan%";
 
     private static final Timespan TWENTY_FOUR_HOURS = new Timespan(1000L * 60L * 60L * 24L);
 

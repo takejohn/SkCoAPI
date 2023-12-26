@@ -126,10 +126,10 @@ public enum DetailPerformance {
     }
 
     public @NotNull String syntaxPattern() {
-        return verb + "[ action] (data|logs) in[ last] %timespan%[ for %-strings%][ except for %-strings%]" +
-                "[ on %-objects%][ except on %-objects%]" +
-                "[ with ([an ]action|actions) %-integers%][ in radius %-integer%]" +
-                "[ at %-location%]";
+        return verb + " [action] (data|logs) in [last] %timespan% [for %-strings%] [except for %-strings%]" +
+                " [on %-objects%] [except on %-objects%]" +
+                " [with ([an] action|actions) %-integers%] [in radius %-integer%]" +
+                " [at %-location%]";
     }
 
     public @NotNull String toString(@NotNull OptionExpressions opt,

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 @Since("0.3.0")
 public class ExprResults extends SimpleExpression<CoreProtectAPI.ParseResult> {
 
-    private static final String PATTERN = "[CoreProtect ]results";
+    private static final String PATTERN = "[CoreProtect] results";
 
     @Override
     public @NotNull Class<? extends CoreProtectAPI.ParseResult> getReturnType() {

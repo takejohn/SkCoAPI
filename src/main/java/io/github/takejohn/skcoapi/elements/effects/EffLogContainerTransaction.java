@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class EffLogContainerTransaction extends Effect {
 
-    public static final String PATTERN = "log[ that] %string% made[ a] transaction[ to[ a] container] at %location%";
+    public static final String PATTERN = "log [that] %string% made [a] transaction [to [a] container] at %location%";
 
     private Expression<String> user;
 

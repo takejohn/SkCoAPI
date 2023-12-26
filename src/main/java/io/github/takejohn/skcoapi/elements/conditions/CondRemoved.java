@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class CondRemoved extends ActedCondition {
 
     public static final String PATTERN =
-            "%string% has[1¦(n't| not)] (broken|removed) %block% in[ last] %timespan%[ (until|till) %-timespan%]";
+            "%string% has[1¦(n't| not)] (broken|removed) %block% in [last] %timespan% [(until|till) %-timespan%]";
 
     @Override
     public @NotNull String toString(@Nullable Event e, boolean debug) {

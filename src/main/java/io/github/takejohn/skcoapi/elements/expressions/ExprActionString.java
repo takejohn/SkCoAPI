@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprActionString extends LogPropertyExpression<String> {
 
-    private static final String PROPERTY_NAME = "action[ (string|text)][s]";
+    private static final String PROPERTY_NAME = "action [(string|text)][s]";
 
     @Override
     protected @NotNull String getPropertyName() {

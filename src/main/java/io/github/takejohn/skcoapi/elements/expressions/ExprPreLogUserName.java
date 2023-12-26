@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprPreLogUserName extends SimpleExpression<String> {
 
-    public static final String PATTERN = "[the ](user[ ]|player )name";
+    public static final String PATTERN = "[the] (user[ ]|player )name";
 
     @Override
     public @NotNull Class<? extends String> getReturnType() {

@@ -24,7 +24,7 @@ import java.util.Objects;
 @RequiredPlugins("CoreProtect")
 public class ExprBlockLookup extends PerformExpression {
 
-    public static final String PATTERN = "lookup[ action] (data|logs) on %block% in[ last] %timespan%";
+    public static final String PATTERN = "lookup [action] (data|logs) on %block% in [last] %timespan%";
 
     private Expression<Block> block;
 

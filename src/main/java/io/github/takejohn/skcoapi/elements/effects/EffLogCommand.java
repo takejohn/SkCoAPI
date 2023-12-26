@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class EffLogCommand extends Effect {
 
-    public static final String PATTERN = "log[ that] %player% executed[[ the] command] %string%";
+    public static final String PATTERN = "log [that] %player% executed [[the] command] %string%";
 
     private Expression<Player> player;
 
