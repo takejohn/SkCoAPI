@@ -1,9 +1,6 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.RequiredPlugins;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Timespan;
@@ -22,6 +19,9 @@ import java.util.Objects;
 @Description("Performs a full lookup on a single block.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
+@Examples({
+        "set {_logs::*} to lookup logs on target block of player in a month"
+})
 public class ExprBlockLookup extends PerformExpression {
 
     public static final String PATTERN = "lookup [action] (data|logs) on %block% in [last] %timespan%";

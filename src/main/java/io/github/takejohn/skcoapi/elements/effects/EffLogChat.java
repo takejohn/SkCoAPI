@@ -1,5 +1,6 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
+import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
@@ -15,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @Name("Log Said")
+@Description("Logs a message as having been send by a player.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
 public class EffLogChat extends Effect {

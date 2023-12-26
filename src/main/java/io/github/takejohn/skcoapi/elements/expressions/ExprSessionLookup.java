@@ -1,9 +1,6 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.RequiredPlugins;
-import ch.njol.skript.doc.Since;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Timespan;
@@ -21,6 +18,9 @@ import java.util.Objects;
 @Description("Performs a session lookup on a single player.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
+@Examples({
+        "set {_lookup::*} to lookup sessions for arg-1 in a day"
+})
 public class ExprSessionLookup extends PerformExpression {
 
     public static final String PATTERN = "lookup session[s] [(data|logs)] for %string% in [last] %timespan%";

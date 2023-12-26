@@ -12,7 +12,8 @@ import org.jetbrains.annotations.NotNull;
 @Description({
         "Performs a rollback.",
         "This effect causes a delay of the script execution.",
-        "Objects specified with `on` and `expect on` can be Entity Types, Item Types or Block Data."
+        "Objects specified with 'on' and 'expect on' can be Entity Types, Item Types or Block Data.",
+        "Use 'results' in this section to get the results of the rollback."
 })
 @Since("0.3.0")
 @RequiredPlugins("CoreProtect")

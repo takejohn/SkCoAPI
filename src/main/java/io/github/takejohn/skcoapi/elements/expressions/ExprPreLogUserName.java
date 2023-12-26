@@ -20,10 +20,15 @@ import org.jetbrains.annotations.NotNull;
         "Usable only in CoreProtect logging event.",
         "The name of the user under which this action will be logged.",
         "This value can be changed.",
-        "This can be referred as `event-string`, which only the getter is provided."
+        "This can be referred as 'event-string', which only the getter is provided."
 })
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
+@Examples({
+        "on CoreProtect logging:",
+        "    if username parsed as offlineplayer is op:",
+        "        cancel event"
+})
 public class ExprPreLogUserName extends SimpleExpression<String> {
 
     public static final String PATTERN = "[the] (user[ ]|player )name";
