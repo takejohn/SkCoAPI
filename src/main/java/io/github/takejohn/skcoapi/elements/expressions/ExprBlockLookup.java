@@ -45,7 +45,7 @@ public class ExprBlockLookup extends PerformExpression {
     }
 
     @Override
-    protected @org.jetbrains.annotations.Nullable List<String[]> perform(@NotNull Event e) {
+    protected @Nullable List<String[]> perform(@NotNull Event e) {
         final Block singleBlock = block.getSingle(e);
         final int timeInSeconds = Timespans.toSeconds(Objects.requireNonNull(time.getSingle(e)));
         return  SkCoAPI.coreProtectAPI.blockLookup(singleBlock, timeInSeconds);

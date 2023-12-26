@@ -39,7 +39,7 @@ public class ExprQueueLookup extends PerformExpression {
     }
 
     @Override
-    protected @org.jetbrains.annotations.Nullable List<String[]> perform(@NotNull Event e) {
+    protected @Nullable List<String[]> perform(@NotNull Event e) {
         return SkCoAPI.coreProtectAPI.queueLookup(block.getSingle(e));
     }
 

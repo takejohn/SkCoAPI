@@ -133,7 +133,7 @@ public enum DetailPerformance {
     }
 
     public @NotNull String toString(@NotNull OptionExpressions opt,
-                                    @org.jetbrains.annotations.Nullable Event e, boolean debug) {
+                                    @Nullable Event e, boolean debug) {
         return verb + " action logs in " + opt.time.toString(e, debug) +
                 (opt.restrictUsers != null ? " for " + opt.restrictUsers.toString(e, debug) : "") +
                 (opt.excludeUsers != null ? " except for " + opt.excludeUsers.toString(e, debug) : "") +

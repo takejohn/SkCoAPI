@@ -48,7 +48,7 @@ public class ExprAPIVersion extends SimpleExpression<Integer> {
     }
 
     @Override
-    protected @Nullable Integer[] get(@NotNull Event e) {
+    protected @NotNull Integer @NotNull[] get(@NotNull Event e) {
         return new Integer[]{SkCoAPI.coreProtectAPI.APIVersion()};
     }
 

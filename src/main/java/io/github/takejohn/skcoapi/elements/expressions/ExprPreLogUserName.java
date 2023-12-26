@@ -50,12 +50,12 @@ public class ExprPreLogUserName extends SimpleExpression<String> {
     }
 
     @Override
-    protected @Nullable String[] get(@NotNull Event e) {
+    protected String @NotNull[] get(@NotNull Event e) {
         return new String[]{((CoreProtectPreLogEvent)e).getUser()};
     }
 
     @Override
-    public @Nullable Class<?>[] acceptChange(Changer.@NotNull ChangeMode mode) {
+    public @NotNull Class<?> @Nullable[] acceptChange(Changer.@NotNull ChangeMode mode) {
         if (mode == Changer.ChangeMode.SET) {
             return CollectionUtils.array(String.class);
         }
@@ -63,7 +63,7 @@ public class ExprPreLogUserName extends SimpleExpression<String> {
     }
 
     @Override
-    public void change(@NotNull Event e, @Nullable Object[] delta, Changer.@NotNull ChangeMode mode) {
+    public void change(@NotNull Event e, Object @Nullable[] delta, Changer.@NotNull ChangeMode mode) {
         final String newUser = delta != null ? (String)delta[0] : null;
         if (newUser != null) {
             ((CoreProtectPreLogEvent)e).setUser(newUser);

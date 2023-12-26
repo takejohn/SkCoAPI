@@ -39,7 +39,7 @@ public class ExprSessionLookup extends PerformExpression {
     }
 
     @Override
-    public @NotNull String toString(@org.jetbrains.annotations.Nullable Event e, boolean debug) {
+    public @NotNull String toString(@Nullable Event e, boolean debug) {
         return "lookup sessions for " + user.toString(e, debug) + " in " + time.toString(e, debug);
     }
 

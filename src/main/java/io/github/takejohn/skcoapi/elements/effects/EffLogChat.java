@@ -1,6 +1,5 @@
 package io.github.takejohn.skcoapi.elements.effects;
 
-import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
@@ -12,8 +11,8 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Log Said")
 @Since("0.1.0")
