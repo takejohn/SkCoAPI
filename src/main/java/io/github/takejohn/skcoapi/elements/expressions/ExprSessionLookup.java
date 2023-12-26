@@ -45,7 +45,7 @@ public class ExprSessionLookup extends PerformExpression {
 
     @Override
     protected @Nullable List<String[]> perform(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.sessionLookup(user.getSingle(e),
+        return SkCoAPI.getCoreProtectAPI().sessionLookup(user.getSingle(e),
                 Timespans.toSeconds(Objects.requireNonNull(time.getSingle(e))));
     }
 

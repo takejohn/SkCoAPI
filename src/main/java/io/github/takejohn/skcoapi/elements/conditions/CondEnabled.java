@@ -34,7 +34,7 @@ public class CondEnabled extends NegatableCondition {
 
     @Override
     public boolean checkBeforeNegated(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.isEnabled();
+        return SkCoAPI.getCoreProtectAPI().isEnabled();
     }
 
 }

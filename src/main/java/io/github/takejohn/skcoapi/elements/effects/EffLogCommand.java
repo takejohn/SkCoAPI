@@ -41,7 +41,7 @@ public class EffLogCommand extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logCommand(player.getSingle(e), command.getSingle(e)));
+        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logCommand(player.getSingle(e), command.getSingle(e)));
     }
 
 }

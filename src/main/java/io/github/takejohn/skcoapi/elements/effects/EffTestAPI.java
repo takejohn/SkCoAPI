@@ -29,7 +29,7 @@ public class EffTestAPI extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        SkCoAPI.coreProtectAPI.testAPI();
+        SkCoAPI.getCoreProtectAPI().testAPI();
     }
 
     @Override

@@ -18,9 +18,9 @@ import java.util.Objects;
 
 public enum DetailPerformance {
 
-    LOOKUP("lookup", SkCoAPI.coreProtectAPI::performLookup),
-    ROLLBACK("rollback", SkCoAPI.coreProtectAPI::performRollback),
-    RESTORE("restore", SkCoAPI.coreProtectAPI::performRestore);
+    LOOKUP("lookup", SkCoAPI.getCoreProtectAPI()::performLookup),
+    ROLLBACK("rollback", SkCoAPI.getCoreProtectAPI()::performRollback),
+    RESTORE("restore", SkCoAPI.getCoreProtectAPI()::performRestore);
 
     public static final class OptionExpressions {
 

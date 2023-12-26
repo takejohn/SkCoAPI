@@ -43,7 +43,7 @@ public class EffLogInteraction extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logInteraction(user.getSingle(e), location.getSingle(e)));
+        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logInteraction(user.getSingle(e), location.getSingle(e)));
     }
 
 }

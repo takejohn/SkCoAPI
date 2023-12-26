@@ -44,7 +44,7 @@ public class EffLogContainerTransaction extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logContainerTransaction(user.getSingle(e), location.getSingle(e)));
+        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logContainerTransaction(user.getSingle(e), location.getSingle(e)));
     }
 
 }

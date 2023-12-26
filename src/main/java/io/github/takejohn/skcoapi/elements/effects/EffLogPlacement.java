@@ -24,7 +24,7 @@ public class EffLogPlacement extends LogBlockUpdateEffect {
 
     @Override
     protected boolean log(String user, Location location, Material type, BlockData blockData) {
-        return SkCoAPI.coreProtectAPI.logPlacement(user, location, type, blockData);
+        return SkCoAPI.getCoreProtectAPI().logPlacement(user, location, type, blockData);
     }
 
     public static void register() {

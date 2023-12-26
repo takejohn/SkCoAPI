@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class SkCoAPI extends JavaPlugin {
 
-    public static final @NotNull CoreProtectAPI coreProtectAPI = getCoreProtectAPI();
+    private static CoreProtectAPI coreProtectAPI;
 
     private static SkCoAPI plugin;
 
@@ -70,7 +70,11 @@ public final class SkCoAPI extends JavaPlugin {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
     }
 
-    private static @NotNull CoreProtectAPI getCoreProtectAPI() {
+    public static @NotNull CoreProtectAPI getCoreProtectAPI() {
+        if (SkCoAPI.coreProtectAPI != null) {
+            return SkCoAPI.coreProtectAPI;
+        }
+
         @Nullable Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CoreProtect");
 
         if (!(plugin instanceof CoreProtect)) {
@@ -81,7 +85,7 @@ public final class SkCoAPI extends JavaPlugin {
         assert plugin instanceof CoreProtect;
         @NotNull CoreProtectAPI coreProtectAPI = ((CoreProtect)plugin).getAPI();
         if (!coreProtectAPI.isEnabled()) {
-            Bukkit.getLogger().warning("CoreProtect API not enabled.");
+            SkCoAPI.plugin.getLogger().warning("CoreProtect API not enabled.");
         }
 
         final int apiVersion = coreProtectAPI.APIVersion();
@@ -91,6 +95,7 @@ public final class SkCoAPI extends JavaPlugin {
             );
         }
 
+        SkCoAPI.coreProtectAPI = coreProtectAPI;
         return coreProtectAPI;
     }
 

@@ -27,7 +27,7 @@ public class CondRemoved extends ActedCondition {
 
     @Override
     public boolean checkBeforeNegated(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.hasRemoved(getUser(e), getBlock(e), getTimeAsSeconds(e), getOffsetAsSeconds(e));
+        return SkCoAPI.getCoreProtectAPI().hasRemoved(getUser(e), getBlock(e), getTimeAsSeconds(e), getOffsetAsSeconds(e));
     }
 
 }

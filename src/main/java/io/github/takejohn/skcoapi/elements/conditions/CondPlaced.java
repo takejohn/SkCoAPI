@@ -27,7 +27,7 @@ public class CondPlaced extends ActedCondition {
 
     @Override
     public boolean checkBeforeNegated(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.hasPlaced(getUser(e), getBlock(e), getTimeAsSeconds(e), getOffsetAsSeconds(e));
+        return SkCoAPI.getCoreProtectAPI().hasPlaced(getUser(e), getBlock(e), getTimeAsSeconds(e), getOffsetAsSeconds(e));
     }
 
 }

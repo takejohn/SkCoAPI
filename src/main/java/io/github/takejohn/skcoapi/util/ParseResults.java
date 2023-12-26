@@ -22,7 +22,7 @@ public final class ParseResults {
         final int resultsSize = results.size();
         final CoreProtectAPI.ParseResult[] parseResults = new CoreProtectAPI.ParseResult[resultsSize];
         for (int i = 0 ; i < resultsSize ; i++) {
-            parseResults[i] = SkCoAPI.coreProtectAPI.parseResult(results.get(i));
+            parseResults[i] = SkCoAPI.getCoreProtectAPI().parseResult(results.get(i));
         }
         return parseResults;
     }

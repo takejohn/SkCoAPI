@@ -40,7 +40,7 @@ public class ExprQueueLookup extends PerformExpression {
 
     @Override
     protected @Nullable List<String[]> perform(@NotNull Event e) {
-        return SkCoAPI.coreProtectAPI.queueLookup(block.getSingle(e));
+        return SkCoAPI.getCoreProtectAPI().queueLookup(block.getSingle(e));
     }
 
     public static void register() {

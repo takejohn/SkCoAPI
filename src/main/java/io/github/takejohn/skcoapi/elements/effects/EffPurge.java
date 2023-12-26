@@ -49,7 +49,7 @@ public class EffPurge extends Effect {
     protected void execute(@NotNull Event e) {
         final Timespan singleTime = time.getSingle(e);
         if (singleTime != null) {
-            SkCoAPI.coreProtectAPI.performPurge(Timespans.toSeconds(singleTime));
+            SkCoAPI.getCoreProtectAPI().performPurge(Timespans.toSeconds(singleTime));
         }
     }
 

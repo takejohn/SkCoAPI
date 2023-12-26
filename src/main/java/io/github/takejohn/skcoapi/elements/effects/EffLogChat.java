@@ -41,7 +41,7 @@ public class EffLogChat extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.coreProtectAPI.logChat(player.getSingle(e), message.getSingle(e)));
+        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logChat(player.getSingle(e), message.getSingle(e)));
     }
 
 }
