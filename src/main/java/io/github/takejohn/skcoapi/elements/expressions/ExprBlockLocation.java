@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprBlockLocation extends LogPropertyExpression<Location> {
 
-    private static final String PROPERTY_NAME = "block (location|position)[s]";
+    private static final String PROPERTY_NAME = "[CoreProtect] block (location|position)[s]";
 
     @Override
     public @NotNull Class<? extends Location> getReturnType() {

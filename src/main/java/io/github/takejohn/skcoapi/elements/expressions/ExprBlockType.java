@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprBlockType extends LogPropertyExpression<ItemType> {
 
-    private static final String PROPERTY_NAME = "block type[s]";
+    private static final String PROPERTY_NAME = "[CoreProtect] block type[s]";
 
     @Override
     protected @NotNull String getPropertyName() {

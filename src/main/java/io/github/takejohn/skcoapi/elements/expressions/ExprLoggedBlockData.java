@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprLoggedBlockData extends LogPropertyExpression<BlockData> {
 
-    private static final String PROPERTY_NAME = "logged block data[s]";
+    private static final String PROPERTY_NAME = "CoreProtect block data[s]";
 
     @Override
     protected @NotNull String getPropertyName() {

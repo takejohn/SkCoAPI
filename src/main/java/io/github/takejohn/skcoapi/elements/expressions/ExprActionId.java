@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprActionId extends LogPropertyExpression<Integer> {
 
-    private static final String PROPERTY_NAME = "action ID[s]";
+    private static final String PROPERTY_NAME = "[CoreProtect] action ID[s]";
 
     @Override
     protected @NotNull String getPropertyName() {

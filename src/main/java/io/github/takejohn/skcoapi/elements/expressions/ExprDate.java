@@ -16,7 +16,7 @@ import ch.njol.skript.util.Date;
 @RequiredPlugins("CoreProtect")
 public class ExprDate extends LogPropertyExpression<Date> {
 
-    private static final String PROPERTY_NAME = "date[s]";
+    private static final String PROPERTY_NAME = "[CoreProtect] date[s]";
 
     @Override
     protected @NotNull String getPropertyName() {

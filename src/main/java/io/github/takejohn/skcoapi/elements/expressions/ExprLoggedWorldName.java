@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class ExprLoggedWorldName extends LogPropertyExpression<String> {
 
-    private static final String PROPERTY_NAME = "logged world name[s]";
+    private static final String PROPERTY_NAME = "CoreProtect world name[s]";
 
     @Override
     protected @NotNull String getPropertyName() {
