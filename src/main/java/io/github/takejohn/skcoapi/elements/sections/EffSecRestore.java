@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
         "This effect causes a delay of the script execution.",
         "Objects specified with `on` and `expect on` can be Entity Data, Entity Types, Item Types or Block Data."
 })
-@Since("0.2.1, 0.3.0 (effect section)")
+@Since("0.3.0")
 @RequiredPlugins("CoreProtect")
 public class EffSecRestore extends PerformanceEffectSection {
 
