@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.elements.sections.CoreProtectPerformanceCompleteEvent;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 @Name("Results")

@@ -6,7 +6,7 @@ import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.data.BlockData;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 @Name("Logged Block Data")

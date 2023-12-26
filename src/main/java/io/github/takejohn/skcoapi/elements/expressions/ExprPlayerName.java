@@ -2,7 +2,7 @@ package io.github.takejohn.skcoapi.elements.expressions;
 
 import ch.njol.skript.doc.*;
 import net.coreprotect.CoreProtectAPI;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 @Name("User/Player Name of Log")

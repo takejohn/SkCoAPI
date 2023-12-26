@@ -32,7 +32,7 @@ public abstract class LogBlockUpdateEffect extends Effect {
     }
 
     @Override
-    public @NotNull String toString(@org.eclipse.jdt.annotation.Nullable Event e, boolean debug) {
+    public @NotNull String toString(@Nullable Event e, boolean debug) {
         return "log that " + user.toString(e, debug) + " " + actionVerb() + " " + typeOrBlockData.toString(e, debug) +
                 " at " + location.toString(e, debug);
     }

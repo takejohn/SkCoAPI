@@ -11,6 +11,7 @@ import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.SkCoAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Name("Test CoreProtect API")
 @Description("Prints out \"[CoreProtect] API Test Successful.\" in the server console.")
@@ -32,7 +33,7 @@ public class EffTestAPI extends Effect {
     }
 
     @Override
-    public @NotNull String toString(@org.eclipse.jdt.annotation.Nullable Event e, boolean debug) {
+    public @NotNull String toString(@Nullable Event e, boolean debug) {
         return "test CoreProtect API";
     }
 

@@ -11,7 +11,7 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 @Name("Log Executed")

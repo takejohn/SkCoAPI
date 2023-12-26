@@ -12,7 +12,7 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.util.Timespans;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

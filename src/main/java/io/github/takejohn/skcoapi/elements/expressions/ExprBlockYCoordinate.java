@@ -1,7 +1,7 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
 import net.coreprotect.CoreProtectAPI;
-import org.eclipse.jdt.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 public class ExprBlockYCoordinate extends LogPropertyExpression<Integer> {
