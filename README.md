@@ -15,6 +15,7 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 
 ## Documentation
 
+[![SkriptHubViewTheDocs](http://skripthub.net/static/addon/ViewTheDocsButton.png)](http://skripthub.net/docs/?addon=SkCoAPI)
 [![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v2/get-the-syntax-black.png)](https://docs.skunity.com/syntax/search/addon:SkCoAPI)
 
 ## Examples
