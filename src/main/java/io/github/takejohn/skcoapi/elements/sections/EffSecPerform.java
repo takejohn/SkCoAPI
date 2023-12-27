@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class PerformanceEffectSection extends EffectSection {
+public abstract class EffSecPerform extends EffectSection {
 
     private DetailPerformance.OptionExpressions opt;
 

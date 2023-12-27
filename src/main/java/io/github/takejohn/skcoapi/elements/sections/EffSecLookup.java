@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
         "lookup logs in a month in radius 5 at location of player:",
         "    set {_lookup::*} to results"
 })
-public class EffSecLookup extends PerformanceEffectSection {
+public class EffSecLookup extends EffSecPerform {
 
     private static final DetailPerformance LOOKUP = DetailPerformance.LOOKUP;
 

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 })
 @Since("0.3.0")
 @RequiredPlugins("CoreProtect")
-public class EffSecRestore extends PerformanceEffectSection {
+public class EffSecRestore extends EffSecPerform {
 
     private static final DetailPerformance RESTORE = DetailPerformance.RESTORE;
 
