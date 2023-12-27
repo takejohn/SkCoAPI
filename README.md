@@ -13,9 +13,9 @@ Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/versio
 * Skript: 2.6.4
 * CoreProtect: 22.1
 
-## Usage
+## Documentation
 
-Documentation will be available soon.
+[![Get on skUnity](https://docs.skunity.com/skunity/library/Docs/Assets/assets/images/buttons/v2/get-the-syntax-black.png)](https://docs.skunity.com/syntax/search/addon:SkCoAPI)
 
 ## Examples
 
