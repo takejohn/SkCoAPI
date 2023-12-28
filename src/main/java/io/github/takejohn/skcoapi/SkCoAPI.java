@@ -24,7 +24,7 @@ public final class SkCoAPI extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        plugin = this;
+        setPlugin(this);
         Skript.registerAddon(this);
         Classes.registerClass(CoreProtectLogs.classInfo());
         ExprBlockType.register();
@@ -56,6 +56,10 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerEffect(EffPurge.class, EffPurge.PATTERN);
         EvtPreLog.register();
         ExprPreLogUserName.register();
+    }
+
+    private static void setPlugin(SkCoAPI plugin) {
+        SkCoAPI.plugin = plugin;
     }
 
     public static void runTask(Runnable runnable) {
