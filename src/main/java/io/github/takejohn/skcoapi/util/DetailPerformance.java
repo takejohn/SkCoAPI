@@ -125,11 +125,26 @@ public enum DetailPerformance {
         this.func = func;
     }
 
-    public @NotNull String syntaxPattern() {
+    public static @NotNull String syntaxPattern(@NotNull String verb) {
         return verb + " [action] (data|logs) in [last] %timespan% [for %-strings%] [except for %-strings%]" +
                 " [on %-objects%] [except on %-objects%]" +
                 " [with ([an] action|actions) %-integers%] [in radius %-integer%]" +
                 " [at %-location%]";
+    }
+
+    public static @NotNull String syntaxPattern() {
+        final StringBuilder result = new StringBuilder("[");
+        final @NotNull DetailPerformance @NotNull[] values = values();
+        for (int i = 0 ; i < values.length ; i++) {
+            if (i != 0) {
+                result.append("|");
+                result.append(i);
+                result.append("¦");
+            }
+            result.append(values[i].verb);
+        }
+        result.append("]");
+        return syntaxPattern(new String(result));
     }
 
     public @NotNull String toString(@NotNull OptionExpressions opt,

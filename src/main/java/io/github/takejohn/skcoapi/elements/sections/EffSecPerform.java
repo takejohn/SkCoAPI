@@ -2,6 +2,7 @@ package io.github.takejohn.skcoapi.elements.sections;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.config.SectionNode;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.effects.Delay;
 import ch.njol.skript.lang.*;
 import ch.njol.skript.timings.SkriptTimings;
@@ -17,19 +18,33 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class EffSecPerform extends EffectSection {
+@Name("Lookup/Rollback/Restore")
+@Description({
+        "Performs a lookup/rollback/restore.",
+        "This effect causes a delay of the script execution.",
+        "Objects specified with 'on' and 'expect on' can be Entity Data, Entity Types, Item Types or Block Data.",
+        "Use 'results' in this section to get the results of the lookup/rollback/restore."
+})
+@Since("0.3.0")
+@RequiredPlugins("CoreProtect")
+@Examples({
+        "lookup logs in a month in radius 5 at location of player:",
+        "    set {_lookup::*} to results"
+})
+public class EffSecPerform extends EffectSection {
 
     private DetailPerformance.OptionExpressions opt;
 
     private Trigger innerTrigger;
 
-    protected abstract @NotNull DetailPerformance performance();
+    private DetailPerformance performance;
 
     @Override
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed,
                         SkriptParser.@NotNull ParseResult parseResult, @Nullable SectionNode sectionNode,
                         @Nullable List<TriggerItem> triggerItems) {
         getParser().setHasDelayBefore(Kleenean.TRUE);
+        performance = DetailPerformance.values()[matchedPattern];
         opt = new DetailPerformance.OptionExpressions(exprs);
         if (sectionNode != null) {
             innerTrigger = loadCode(sectionNode, CoreProtectPerformanceCompleteEvent.NAME, CoreProtectPerformanceCompleteEvent.class);
@@ -50,12 +65,12 @@ public abstract class EffSecPerform extends EffectSection {
 
     protected @NotNull Event execute(@NotNull Event formerEvent) {
         return new CoreProtectPerformanceCompleteEvent(
-                ParseResults.parseResults(performance().perform(opt, formerEvent)));
+                ParseResults.parseResults(performance.perform(opt, formerEvent)));
     }
 
     @Override
     public @NotNull String toString(@Nullable Event e, boolean debug) {
-        return performance().toString(opt, e, debug);
+        return performance.toString(opt, e, debug);
     }
 
     private void asynchronousTask(@NotNull Event e, @Nullable Object localVariables) {
@@ -90,6 +105,10 @@ public abstract class EffSecPerform extends EffectSection {
             return null;
         }
         return SkriptTimings.start(trigger.getDebugLabel());
+    }
+
+    public static void register() {
+        Skript.registerSection(EffSecPerform.class, DetailPerformance.syntaxPattern());
     }
 
 }
