@@ -9,7 +9,7 @@ import org.bukkit.block.data.BlockData;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-@Name("Logged Block Data")
+@Name("Block Data")
 @Description("The BlockData of the block.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")

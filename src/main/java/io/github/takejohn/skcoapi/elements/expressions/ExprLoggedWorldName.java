@@ -8,7 +8,7 @@ import net.coreprotect.CoreProtectAPI;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
 
-@Name("Logged World Name")
+@Name("World Name")
 @Description("The name of the world the block is located in.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
