@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 @Description("Checks if a user has already placed a block at the location within the specified time limit.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
-public class CondPlaced extends ActedCondition {
+public class CondPlaced extends CondPlacedRemoved {
 
     public static final String PATTERN =
             "%string% has[1¦(n't| not)] (placed|built) %block% in [last] %timespan% [(until|till) %-timespan%]";

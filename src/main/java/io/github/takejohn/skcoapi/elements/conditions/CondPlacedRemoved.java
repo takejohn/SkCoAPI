@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public abstract class ActedCondition extends NegatableCondition {
+public abstract class CondPlacedRemoved extends NegatableCondition {
 
     protected Expression<String> user;
 
