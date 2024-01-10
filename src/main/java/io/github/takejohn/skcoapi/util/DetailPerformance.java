@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,26 +57,24 @@ public enum DetailPerformance {
             return Timespans.toSeconds(Objects.requireNonNull(time.getSingle(e)));
         }
 
-        public @Nullable List<String> getRestrictUsers(@NotNull Event e) {
-            return restrictUsers != null ? Arrays.asList(restrictUsers.getArray(e)) : null;
+        public @NotNull List<String> getRestrictUsers(@NotNull Event e) {
+            return restrictUsers != null ? Arrays.asList(restrictUsers.getArray(e)) : Collections.emptyList();
         }
 
-        @Nullable
-        public List<String> getExcludeUsers(@NotNull Event e) {
-            return excludeUsers != null ? Arrays.asList(excludeUsers.getArray(e)) : null;
+        public @NotNull List<String> getExcludeUsers(@NotNull Event e) {
+            return excludeUsers != null ? Arrays.asList(excludeUsers.getArray(e)) : Collections.emptyList();
         }
 
-        @Nullable
-        public List<Object> getRestrictBlocks(@NotNull Event e) {
-            return restrictBlocks != null ? blocksAsList(restrictBlocks.getArray(e)) : null;
+        public @NotNull List<Object> getRestrictBlocks(@NotNull Event e) {
+            return restrictBlocks != null ? blocksAsList(restrictBlocks.getArray(e)) : Collections.emptyList();
         }
 
-        public @Nullable List<Object> getExcludeBlock(@NotNull Event e) {
-            return excludeBlocks != null ? blocksAsList(excludeBlocks.getArray(e)) : null;
+        public @NotNull List<Object> getExcludeBlock(@NotNull Event e) {
+            return excludeBlocks != null ? blocksAsList(excludeBlocks.getArray(e)) : Collections.emptyList();
         }
 
-        public @Nullable List<Integer> getActionList(@NotNull Event e) {
-            return actionList != null ? Arrays.asList(actionList.getArray(e)) : null;
+        public @NotNull List<Integer> getActionList(@NotNull Event e) {
+            return actionList != null ? Arrays.asList(actionList.getArray(e)) : Collections.emptyList();
         }
 
         public int getRadius(@NotNull Event e) {
@@ -103,6 +102,81 @@ public enum DetailPerformance {
                 }
             }
             return result;
+        }
+
+    }
+
+    public static class OptionSet {
+
+        private int time;
+
+        private final List<@NotNull String> restrictUsers = new ArrayList<>();
+
+        private final List<@NotNull String> excludeUsers = new ArrayList<>();
+
+        private final List<@NotNull Object> restrictBlocks = new ArrayList<>();
+
+        private final List<@NotNull Object> excludeBlocks = new ArrayList<>();
+
+        private final List<@NotNull Integer> actionList = new ArrayList<>();
+
+        private int radius;
+
+        private Location radiusLocation;
+
+        public OptionSet(@NotNull OptionExpressions optionExpressions, @NotNull Event e) {
+            time = optionExpressions.getTime(e);
+            restrictUsers.addAll(optionExpressions.getRestrictUsers(e));
+            excludeUsers.addAll(optionExpressions.getExcludeUsers(e));
+            restrictBlocks.addAll(optionExpressions.getRestrictBlocks(e));
+            excludeBlocks.addAll(optionExpressions.getExcludeBlock(e));
+            actionList.addAll(optionExpressions.getActionList(e));
+            radius = optionExpressions.getRadius(e);
+            radiusLocation = optionExpressions.getRadiusLocation(e);
+        }
+
+        public int time() {
+            return time;
+        }
+
+        public @NotNull List<@NotNull String> restrictUsers() {
+            return restrictUsers;
+        }
+
+        public @NotNull List<@NotNull String> excludeUsers() {
+            return excludeUsers;
+        }
+
+        public @NotNull List<@NotNull Object> restrictBlocks() {
+            return restrictBlocks;
+        }
+
+        public @NotNull List<@NotNull Object> excludeBlocks() {
+            return excludeBlocks;
+        }
+
+        public @NotNull List<@NotNull Integer> actionList() {
+            return actionList;
+        }
+
+        public int radius() {
+            return radius;
+        }
+
+        public Location radiusLocation() {
+            return radiusLocation;
+        }
+
+        public void setTime(int time) {
+            this.time = time;
+        }
+
+        public void setRadius(int radius) {
+            this.radius = radius;
+        }
+
+        public void setRadiusLocation(Location radiusLocation) {
+            this.radiusLocation = radiusLocation;
         }
 
     }
@@ -160,9 +234,13 @@ public enum DetailPerformance {
     }
 
     public List<String[]> perform(@NotNull OptionExpressions opt, @NotNull Event e) {
-        return func.perform(opt.getTime(e), opt.getRestrictUsers(e), opt.getExcludeUsers(e),
-                opt.getRestrictBlocks(e), opt.getExcludeBlock(e), opt.getActionList(e),
-                opt.getRadius(e), opt.getRadiusLocation(e));
+        return perform(new OptionSet(opt, e));
+    }
+
+    public List<String[]> perform(@NotNull OptionSet optionSet) {
+        return func.perform(optionSet.time(), optionSet.restrictUsers(), optionSet.excludeUsers(),
+                optionSet.restrictBlocks(), optionSet.excludeBlocks(), optionSet.actionList(),
+                optionSet.radius(), optionSet.radiusLocation());
     }
 
 }
