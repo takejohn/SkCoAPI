@@ -51,7 +51,6 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerEffect(EffLogContainerTransaction.class, EffLogContainerTransaction.PATTERN);
         Skript.registerEffect(EffLogInteraction.class, EffLogInteraction.PATTERN);
         CondLoggingSucceeded.register();
-        CondPlacedRemoved.register();
         Skript.registerEffect(EffPurge.class, EffPurge.PATTERN);
         EvtPreLog.register();
         ExprPreLogUserName.register();
