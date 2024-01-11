@@ -7,6 +7,7 @@ import io.github.takejohn.skcoapi.elements.effects.*;
 import io.github.takejohn.skcoapi.elements.events.EvtPreLog;
 import io.github.takejohn.skcoapi.elements.expressions.*;
 import io.github.takejohn.skcoapi.elements.sections.EffSecPerform;
+import io.github.takejohn.skcoapi.elements.sections.SecCoreProtectWhere;
 import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
@@ -40,6 +41,7 @@ public final class SkCoAPI extends JavaPlugin {
         Skript.registerCondition(CondEnabled.class, CondEnabled.PATTERN);
         Skript.registerEffect(EffTestAPI.class, EffTestAPI.PATTERN);
         EffSecPerform.register();
+        SecCoreProtectWhere.register();
         ExprResults.register();
         ExprBlockLookup.register();
         ExprSessionLookup.register();

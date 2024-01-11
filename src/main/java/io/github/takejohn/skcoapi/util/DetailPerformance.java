@@ -124,7 +124,12 @@ public enum DetailPerformance {
 
         private Location radiusLocation;
 
+        public OptionSet() {
+            // default constructor
+        }
+
         public OptionSet(@NotNull OptionExpressions optionExpressions, @NotNull Event e) {
+            this();
             time = optionExpressions.getTime(e);
             restrictUsers.addAll(optionExpressions.getRestrictUsers(e));
             excludeUsers.addAll(optionExpressions.getExcludeUsers(e));
