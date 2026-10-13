@@ -11,8 +11,12 @@ public final class Timespans {
         throw new AssertionError(getClass().getName() + " is a util class");
     }
 
+    /**
+     * Converts a timespan into seconds, as CoreProtect API expects.
+     * Timespans too long for an {@code int} (including infinite ones) are clamped to {@link Integer#MAX_VALUE}.
+     */
     public static int toSeconds(@NotNull Timespan timespan) {
-        return (int)(timespan.getMilliSeconds() / 1000L);
+        return (int)Math.min(timespan.getAs(Timespan.TimePeriod.SECOND), Integer.MAX_VALUE);
     }
 
 }

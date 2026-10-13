@@ -1,17 +1,22 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.*;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Events;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.elements.sections.CoreProtectPerformanceCompleteEvent;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Results")
 @Events("CoreProtect performance complete")
@@ -24,6 +29,15 @@ import org.jetbrains.annotations.NotNull;
 public class ExprResults extends SimpleExpression<CoreProtectAPI.ParseResult> {
 
     private static final String PATTERN = "[CoreProtect] results";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EXPRESSION,
+                SyntaxInfo.Expression.builder(ExprResults.class, CoreProtectAPI.ParseResult.class)
+                        .priority(SyntaxInfo.SIMPLE)
+                        .supplier(ExprResults::new)
+                        .addPattern(PATTERN)
+                        .build());
+    }
 
     @Override
     public @NotNull Class<? extends CoreProtectAPI.ParseResult> getReturnType() {
@@ -47,17 +61,15 @@ public class ExprResults extends SimpleExpression<CoreProtectAPI.ParseResult> {
 
     @Override
     public @NotNull String toString(@Nullable Event e, boolean debug) {
-        return PATTERN;
+        return "CoreProtect results";
     }
 
     @Override
     protected CoreProtectAPI.@NotNull ParseResult @NotNull[] get(@NotNull Event e) {
-        assert e instanceof CoreProtectPerformanceCompleteEvent;
-        return ((CoreProtectPerformanceCompleteEvent)e).getResults();
-    }
-
-    public static void register() {
-        Skript.registerExpression(ExprResults.class, CoreProtectAPI.ParseResult.class, ExpressionType.SIMPLE, PATTERN);
+        if (!(e instanceof CoreProtectPerformanceCompleteEvent completeEvent)) {
+            return new CoreProtectAPI.ParseResult[0];
+        }
+        return completeEvent.getResults();
     }
 
 }

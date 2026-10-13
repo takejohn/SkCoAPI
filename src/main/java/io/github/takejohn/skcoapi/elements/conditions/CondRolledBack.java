@@ -7,10 +7,13 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
+import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Is Rolled Back")
 @Description("Checks If the block is currently rolled back or not.")
@@ -18,9 +21,15 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class CondRolledBack extends NegatableCondition {
 
-    public static final String PATTERN = "%coreprotectlog% is[1¦(n't| not)] rolled back";
+    public static final String PATTERN =
+            "%" + CoreProtectLogs.CODE_NAME + "% is[" + NEGATED_TAG + ":(n't| not)] rolled back";
 
     private Expression<CoreProtectAPI.ParseResult> log;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.CONDITION,
+                SyntaxInfo.simple(CondRolledBack.class, CondRolledBack::new, PATTERN));
+    }
 
     @SuppressWarnings("unchecked")
     @Override

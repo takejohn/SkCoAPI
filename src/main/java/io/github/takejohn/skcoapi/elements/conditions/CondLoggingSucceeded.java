@@ -1,6 +1,5 @@
 package io.github.takejohn.skcoapi.elements.conditions;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
@@ -9,8 +8,10 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Logging Succeeded")
 @Description("Checks if the log said/executed/placed/broke/container transaction/interaction effect lastly ran was successful.")
@@ -20,10 +21,15 @@ public class CondLoggingSucceeded extends NegatableCondition {
 
     private static final String[] PATTERNS = {
             "logging (succeeded|did(n't| not) fail)",
-            "logging (failed|din(n't| not) succeed)"
+            "logging (failed|did(n't| not) succeed)"
     };
 
     private static volatile boolean result = false;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.CONDITION,
+                SyntaxInfo.simple(CondLoggingSucceeded.class, CondLoggingSucceeded::new, PATTERNS));
+    }
 
     @Override
     protected boolean isNegativeCondition(int matchedPattern, SkriptParser.@NotNull ParseResult parseResult) {
@@ -50,12 +56,8 @@ public class CondLoggingSucceeded extends NegatableCondition {
         return CondLoggingSucceeded.result;
     }
 
-    public static synchronized void set(boolean result) {
+    public static void set(boolean result) {
         CondLoggingSucceeded.result = result;
-    }
-
-    public static void register() {
-        Skript.registerCondition(CondLoggingSucceeded.class, PATTERNS);
     }
 
 }

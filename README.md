@@ -2,16 +2,54 @@
 
 ## Overview
 
-SkCoAPI is an adapter of CoreProtect API v9 for Skript.
+SkCoAPI is an adapter of CoreProtect API (v9 or later) for Skript.
 
-Refer [CoreProtect API v9 Documentation](https://docs.coreprotect.net/api/version/v9/) for information of each Java method.
+Refer [CoreProtect API Documentation](https://docs.coreprotect.net/api/) for information of each Java method.
 
 ## Minimum Supported Versions
 
-* Java: 11
-* Spigot: 1.15 R0.1
-* Skript: 2.6.4
-* CoreProtect: 22.1
+Since 0.3.1:
+
+* Java: 25
+* Paper: 26.2
+* Skript: 2.16.2
+* CoreProtect: 23.2
+
+Versions up to 0.3.0 target Java 11, Spigot 1.15, Skript 2.6.4 and CoreProtect 22.1.
+
+## Building
+
+```
+./gradlew build
+```
+
+The jar is written to `build/libs/SkCoAPI-<version>.jar`.
+A JDK 25 is downloaded automatically by Gradle if none is installed.
+
+## Changes in 0.3.1
+
+* Built against Paper 26.2, Skript 2.16.2 and CoreProtect 23.2 (API v11) for Java 25.
+* Registers syntax through the addon API of Skript 2.14+ (`SkriptAddon`, `SyntaxRegistry`, `EventValueRegistry`)
+  instead of the removed / deprecated `Skript.register*` and `EventValues` methods.
+  0.3.0 failed on Skript 2.16 because `EventValues.registerEventValue(..., Getter, int)` no longer exists.
+* Lookup / rollback / restore sections evaluate their arguments on the main thread and only query CoreProtect
+  asynchronously. The section body now also runs when the section is the last statement of a trigger,
+  and the trigger continues even if CoreProtect throws.
+* `on CoreProtect logging action by "<user>"` now filters by the user (previously ignored).
+* `logging didn't succeed` now parses (the pattern had a typo).
+* Literals in `on` / `except on` (e.g. `on stone`, `except on dirt and grass block`, `on campfire[lit=false]`)
+  are parsed as item types, block data or entity types. Previously they threw "UnparsedLiterals must be converted
+  before use" at runtime. Unknown literals are now a parse error.
+* If `for`, `on`, `with action` or `in radius` is given but evaluates to nothing (e.g. an unset variable),
+  the lookup / rollback / restore does nothing and returns no results.
+  CoreProtect treats an empty filter as no filter, so previously e.g. `rollback ... for {_unset}` rolled back every user.
+* Item types in `on` / `except on` pass every material they represent instead of a random one.
+* Entity types in `on` / `except on` resolve to the closest Bukkit entity type, and entities resolve to their type.
+  Write entity types as `a zombie` or `zombies`: a bare `zombie` means "the zombie" of the event in Skript.
+* If CoreProtect is installed but failed to start (e.g. it does not support the Minecraft version),
+  SkCoAPI logs a clear message instead of a `NoClassDefFoundError`.
+* Null values (e.g. an unset variable) make logging effects fail instead of throwing.
+* `block type` / `CoreProtect block data` of logs without a block (e.g. session logs) are empty instead of throwing.
 
 ## Usage
 

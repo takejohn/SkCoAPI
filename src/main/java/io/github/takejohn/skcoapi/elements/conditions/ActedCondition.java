@@ -8,8 +8,7 @@ import io.github.takejohn.skcoapi.util.Timespans;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class ActedCondition extends NegatableCondition {
 
@@ -20,6 +19,16 @@ public abstract class ActedCondition extends NegatableCondition {
     protected Expression<Timespan> time;
 
     protected Expression<Timespan> offset;
+
+    /**
+     * Builds the pattern of a condition which checks a user has acted on a block.
+     *
+     * @param verbs the verbs in the past participle, e.g. {@code (placed|built)}
+     */
+    protected static @NotNull String pattern(@NotNull String verbs) {
+        return "%string% has[" + NEGATED_TAG + ":(n't| not)] " + verbs +
+                " %block% in [last] %timespan% [(until|till) %-timespan%]";
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -32,20 +41,19 @@ public abstract class ActedCondition extends NegatableCondition {
         return true;
     }
 
-    protected String getUser(Event e) {
-        return user.getSingle(e);
+    @Override
+    protected final boolean checkBeforeNegated(@NotNull Event e) {
+        final @Nullable String singleUser = user.getSingle(e);
+        final @Nullable Block singleBlock = block.getSingle(e);
+        final @Nullable Timespan singleTime = time.getSingle(e);
+        if (singleUser == null || singleBlock == null || singleTime == null) {
+            return false;
+        }
+        final @Nullable Timespan singleOffset = offset != null ? offset.getSingle(e) : null;
+        return hasActed(singleUser, singleBlock, Timespans.toSeconds(singleTime),
+                singleOffset != null ? Timespans.toSeconds(singleOffset) : 0);
     }
 
-    protected Block getBlock(Event e) {
-        return block.getSingle(e);
-    }
-
-    protected int getTimeAsSeconds(Event e) {
-        return Timespans.toSeconds(Objects.requireNonNull(time.getSingle(e)));
-    }
-
-    protected int getOffsetAsSeconds(Event e) {
-        return offset != null ? Timespans.toSeconds(Objects.requireNonNull(offset.getSingle(e))) : 0;
-    }
+    protected abstract boolean hasActed(@NotNull String user, @NotNull Block block, int time, int offset);
 
 }

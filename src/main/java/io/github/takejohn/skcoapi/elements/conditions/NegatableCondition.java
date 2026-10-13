@@ -9,6 +9,11 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class NegatableCondition extends Condition {
 
+    /**
+     * The parse tag which marks a pattern as negated, e.g. {@code is[negated:(n't| not)]}.
+     */
+    protected static final String NEGATED_TAG = "negated";
+
     @Override
     public final boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed,
                         SkriptParser.@NotNull ParseResult parseResult) {
@@ -17,7 +22,7 @@ public abstract class NegatableCondition extends Condition {
     }
 
     protected boolean isNegativeCondition(int matchedPattern, SkriptParser.@NotNull ParseResult parseResult) {
-        return parseResult.mark != 0;
+        return parseResult.hasTag(NEGATED_TAG);
     }
 
     protected abstract boolean afterSetNegated(Expression<?> @NotNull [] exprs, int matchedPattern,

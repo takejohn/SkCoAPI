@@ -4,11 +4,11 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
-import net.coreprotect.CoreProtectAPI;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
-
 import ch.njol.skript.util.Date;
+import net.coreprotect.CoreProtectAPI;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Date")
 @Description("The time of the action.")
@@ -17,6 +17,10 @@ import ch.njol.skript.util.Date;
 public class ExprDate extends LogPropertyExpression<Date> {
 
     private static final String PROPERTY_NAME = "[CoreProtect] date[s]";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registerProperty(registry, ExprDate.class, Date.class, PROPERTY_NAME, ExprDate::new);
+    }
 
     @Override
     protected @NotNull String getPropertyName() {
@@ -31,10 +35,6 @@ public class ExprDate extends LogPropertyExpression<Date> {
     @Override
     public @Nullable Date convert(CoreProtectAPI.ParseResult parseResult) {
         return new Date(parseResult.getTimestamp());
-    }
-
-    public static void register() {
-        register(ExprDate.class, Date.class, PROPERTY_NAME);
     }
 
 }

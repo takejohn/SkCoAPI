@@ -4,25 +4,34 @@ import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+/**
+ * A pseudo event in which the body of a lookup / rollback / restore section runs.
+ * This event is never called through Bukkit.
+ */
 public class CoreProtectPerformanceCompleteEvent extends Event {
 
     public static final @NotNull String NAME = "CoreProtect performance complete";
 
-    private final @Nullable CoreProtectAPI.ParseResult[] results;
+    private static final HandlerList HANDLERS = new HandlerList();
 
-    CoreProtectPerformanceCompleteEvent(@Nullable CoreProtectAPI.ParseResult[] results) {
+    private final CoreProtectAPI.@NotNull ParseResult @NotNull[] results;
+
+    CoreProtectPerformanceCompleteEvent(CoreProtectAPI.@NotNull ParseResult @NotNull[] results) {
         this.results = results;
     }
 
-    public CoreProtectAPI.ParseResult[] getResults() {
+    public CoreProtectAPI.@NotNull ParseResult @NotNull[] getResults() {
         return results;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        throw new UnsupportedOperationException();
+        return HANDLERS;
+    }
+
+    public static @NotNull HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
 }

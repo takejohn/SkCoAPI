@@ -14,8 +14,10 @@ import ch.njol.util.Kleenean;
 import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.util.Timespans;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Purge CoreProtect Data")
 @Description("Performs a purge on the CoreProtect database.")
@@ -25,16 +27,20 @@ public class EffPurge extends Effect {
 
     public static final String PATTERN = "(purge|delete) [(any|all)] CoreProtect (data|logs) older than %timespan%";
 
-    private static final Timespan TWENTY_FOUR_HOURS = new Timespan(1000L * 60L * 60L * 24L);
+    private static final Timespan TWENTY_FOUR_HOURS = new Timespan(Timespan.TimePeriod.DAY, 1L);
 
     private Expression<Timespan> time;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EFFECT, SyntaxInfo.simple(EffPurge.class, EffPurge::new, PATTERN));
+    }
 
     @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern, @NotNull Kleenean isDelayed,
                         SkriptParser.@NotNull ParseResult parseResult) {
         time = (Expression<Timespan>)exprs[0];
-        if (time instanceof Literal && ((Literal<Timespan>)time).getSingle().compareTo(TWENTY_FOUR_HOURS) < 0) {
+        if (time instanceof Literal<Timespan> literal && literal.getSingle().compareTo(TWENTY_FOUR_HOURS) < 0) {
             Skript.warning("You can only purge data older than 24 hours.");
         }
         return true;

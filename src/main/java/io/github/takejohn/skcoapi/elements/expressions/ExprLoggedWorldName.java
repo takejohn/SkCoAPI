@@ -5,8 +5,9 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import net.coreprotect.CoreProtectAPI;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Logged World Name")
 @Description("The name of the world the block is located in.")
@@ -15,6 +16,10 @@ import org.jetbrains.annotations.NotNull;
 public class ExprLoggedWorldName extends LogPropertyExpression<String> {
 
     private static final String PROPERTY_NAME = "CoreProtect world name[s]";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registerProperty(registry, ExprLoggedWorldName.class, String.class, PROPERTY_NAME, ExprLoggedWorldName::new);
+    }
 
     @Override
     protected @NotNull String getPropertyName() {
@@ -29,10 +34,6 @@ public class ExprLoggedWorldName extends LogPropertyExpression<String> {
     @Override
     public @Nullable String convert(CoreProtectAPI.ParseResult parseResult) {
         return parseResult.worldName();
-    }
-
-    public static void register() {
-        register(ExprLoggedWorldName.class, String.class, PROPERTY_NAME);
     }
 
 }

@@ -1,6 +1,10 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
-import ch.njol.skript.doc.*;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Example;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.util.Timespan;
@@ -9,19 +13,17 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.util.Timespans;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 import java.util.List;
-import java.util.Objects;
 
 @Name("Lookup On Block")
 @Description("Performs a full lookup on a single block.")
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
-@Examples({
-        "set {_logs::*} to lookup logs on target block of player in a month"
-})
+@Example("set {_logs::*} to lookup logs on target block of player in a month")
 public class ExprBlockLookup extends PerformExpression {
 
     public static final String PATTERN = "lookup [action] (data|logs) on %block% in [last] %timespan%";
@@ -29,6 +31,10 @@ public class ExprBlockLookup extends PerformExpression {
     private Expression<Block> block;
 
     private Expression<Timespan> time;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        register(registry, ExprBlockLookup.class, ExprBlockLookup::new, PATTERN);
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -47,12 +53,11 @@ public class ExprBlockLookup extends PerformExpression {
     @Override
     protected @Nullable List<String[]> perform(@NotNull Event e) {
         final Block singleBlock = block.getSingle(e);
-        final int timeInSeconds = Timespans.toSeconds(Objects.requireNonNull(time.getSingle(e)));
-        return  SkCoAPI.getCoreProtectAPI().blockLookup(singleBlock, timeInSeconds);
-    }
-
-    public static void register() {
-        register(ExprBlockLookup.class, PATTERN);
+        final Timespan singleTime = time.getSingle(e);
+        if (singleBlock == null || singleTime == null) {
+            return null;
+        }
+        return SkCoAPI.getCoreProtectAPI().blockLookup(singleBlock, Timespans.toSeconds(singleTime));
     }
 
 }

@@ -4,10 +4,12 @@ import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
+import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.block.data.BlockData;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Logged Block Data")
 @Description("The BlockData of the block.")
@@ -16,6 +18,10 @@ import org.jetbrains.annotations.NotNull;
 public class ExprLoggedBlockData extends LogPropertyExpression<BlockData> {
 
     private static final String PROPERTY_NAME = "CoreProtect block data[s]";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registerProperty(registry, ExprLoggedBlockData.class, BlockData.class, PROPERTY_NAME, ExprLoggedBlockData::new);
+    }
 
     @Override
     protected @NotNull String getPropertyName() {
@@ -29,11 +35,7 @@ public class ExprLoggedBlockData extends LogPropertyExpression<BlockData> {
 
     @Override
     public @Nullable BlockData convert(CoreProtectAPI.ParseResult parseResult) {
-        return parseResult.getBlockData();
-    }
-
-    public static void register() {
-        register(ExprLoggedBlockData.class, BlockData.class, PROPERTY_NAME);
+        return CoreProtectLogs.getBlockDataOrNull(parseResult);
     }
 
 }

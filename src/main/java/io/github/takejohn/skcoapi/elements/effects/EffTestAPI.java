@@ -12,6 +12,8 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Test CoreProtect API")
 @Description("Prints out \"[CoreProtect] API Test Successful.\" in the server console.")
@@ -20,6 +22,10 @@ import org.jetbrains.annotations.Nullable;
 public class EffTestAPI extends Effect {
 
     public static final String PATTERN = "test [the] CoreProtect API";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EFFECT, SyntaxInfo.simple(EffTestAPI.class, EffTestAPI::new, PATTERN));
+    }
 
     @Override
     public boolean init(Expression<?> @NotNull [] exprs, int matchedPattern,

@@ -12,8 +12,10 @@ import io.github.takejohn.skcoapi.SkCoAPI;
 import io.github.takejohn.skcoapi.elements.conditions.CondLoggingSucceeded;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Log Executed")
 @Description("Logs a command as having been executed by a player.")
@@ -26,6 +28,10 @@ public class EffLogCommand extends Effect {
     private Expression<Player> player;
 
     private Expression<String> command;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EFFECT, SyntaxInfo.simple(EffLogCommand.class, EffLogCommand::new, PATTERN));
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -43,7 +49,10 @@ public class EffLogCommand extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logCommand(player.getSingle(e), command.getSingle(e)));
+        final Player singlePlayer = player.getSingle(e);
+        final String singleCommand = command.getSingle(e);
+        CondLoggingSucceeded.set(singlePlayer != null && singleCommand != null &&
+                SkCoAPI.getCoreProtectAPI().logCommand(singlePlayer, singleCommand));
     }
 
 }

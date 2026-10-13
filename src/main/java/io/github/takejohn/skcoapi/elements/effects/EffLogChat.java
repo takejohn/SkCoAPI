@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Log Said")
 @Description("Logs a message as having been send by a player.")
@@ -26,6 +28,10 @@ public class EffLogChat extends Effect {
     private Expression<Player> player;
 
     private Expression<String> message;
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EFFECT, SyntaxInfo.simple(EffLogChat.class, EffLogChat::new, PATTERN));
+    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -43,7 +49,10 @@ public class EffLogChat extends Effect {
 
     @Override
     protected void execute(@NotNull Event e) {
-        CondLoggingSucceeded.set(SkCoAPI.getCoreProtectAPI().logChat(player.getSingle(e), message.getSingle(e)));
+        final Player singlePlayer = player.getSingle(e);
+        final String singleMessage = message.getSingle(e);
+        CondLoggingSucceeded.set(singlePlayer != null && singleMessage != null &&
+                SkCoAPI.getCoreProtectAPI().logChat(singlePlayer, singleMessage));
     }
 
 }

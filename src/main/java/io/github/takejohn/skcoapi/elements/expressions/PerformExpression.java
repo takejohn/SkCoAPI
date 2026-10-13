@@ -1,15 +1,16 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleExpression;
 import io.github.takejohn.skcoapi.util.ParseResults;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class PerformExpression extends SimpleExpression<CoreProtectAPI.ParseResult> {
 
@@ -30,12 +31,14 @@ public abstract class PerformExpression extends SimpleExpression<CoreProtectAPI.
 
     protected abstract @Nullable List<String[]> perform(@NotNull Event e);
 
-    public static void register(@NotNull Class<? extends PerformExpression>c, @NotNull String pattern) {
-        Skript.registerExpression(c, CoreProtectAPI.ParseResult.class, ExpressionType.COMBINED, pattern);
-    }
-
-    public static void register(@NotNull Class<? extends PerformExpression>c, ExpressionType type, @NotNull String pattern) {
-        Skript.registerExpression(c, CoreProtectAPI.ParseResult.class, type, pattern);
+    protected static <E extends PerformExpression> void register(@NotNull SyntaxRegistry registry, @NotNull Class<E> c,
+                                                                 @NotNull Supplier<E> supplier, @NotNull String pattern) {
+        registry.register(SyntaxRegistry.EXPRESSION,
+                SyntaxInfo.Expression.builder(c, CoreProtectAPI.ParseResult.class)
+                        .priority(SyntaxInfo.COMBINED)
+                        .supplier(supplier)
+                        .addPattern(pattern)
+                        .build());
     }
 
 }

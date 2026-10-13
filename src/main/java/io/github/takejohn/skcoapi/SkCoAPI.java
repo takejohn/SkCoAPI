@@ -1,15 +1,7 @@
 package io.github.takejohn.skcoapi;
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.registrations.Classes;
-import io.github.takejohn.skcoapi.elements.conditions.*;
-import io.github.takejohn.skcoapi.elements.effects.*;
-import io.github.takejohn.skcoapi.elements.events.EvtPreLog;
-import io.github.takejohn.skcoapi.elements.expressions.*;
-import io.github.takejohn.skcoapi.elements.sections.EffSecLookup;
-import io.github.takejohn.skcoapi.elements.sections.EffSecRestore;
-import io.github.takejohn.skcoapi.elements.sections.EffSecRollback;
-import io.github.takejohn.skcoapi.elements.types.CoreProtectLogs;
+import io.github.takejohn.skcoapi.elements.CoreProtectModule;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import org.bukkit.Bukkit;
@@ -17,85 +9,95 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.addon.SkriptAddon;
 
 public final class SkCoAPI extends JavaPlugin {
 
-    private static CoreProtectAPI coreProtectAPI;
+    /**
+     * The oldest CoreProtect API version which provides every method this addon calls.
+     */
+    private static final int MINIMUM_API_VERSION = 9;
 
     private static SkCoAPI plugin;
+
+    private static CoreProtectAPI coreProtectAPI;
 
     @Override
     public void onEnable() {
         plugin = this;
-        Skript.registerAddon(this);
-        Classes.registerClass(CoreProtectLogs.classInfo());
-        ExprBlockType.register();
-        ExprLoggedBlockData.register();
-        ExprPlayerName.register();
-        ExprDate.register();
-        ExprActionId.register();
-        ExprActionString.register();
-        ExprAPIVersion.register();
-        Skript.registerCondition(CondRolledBack.class, CondRolledBack.PATTERN);
-        ExprLoggedWorldName.register();
-        ExprBlockLocation.register();
-        Skript.registerCondition(CondEnabled.class, CondEnabled.PATTERN);
-        Skript.registerEffect(EffTestAPI.class, EffTestAPI.PATTERN);
-        EffSecLookup.register();
-        EffSecRollback.register();
-        EffSecRestore.register();
-        ExprResults.register();
-        ExprBlockLookup.register();
-        ExprSessionLookup.register();
-        ExprQueueLookup.register();
-        Skript.registerEffect(EffLogChat.class, EffLogChat.PATTERN);
-        Skript.registerEffect(EffLogCommand.class, EffLogCommand.PATTERN);
-        EffLogPlacement.register();
-        EffLogRemoval.register();
-        Skript.registerEffect(EffLogContainerTransaction.class, EffLogContainerTransaction.PATTERN);
-        Skript.registerEffect(EffLogInteraction.class, EffLogInteraction.PATTERN);
-        CondLoggingSucceeded.register();
-        Skript.registerCondition(CondPlaced.class, CondPlaced.PATTERN);
-        Skript.registerCondition(CondRemoved.class, CondRemoved.PATTERN);
-        Skript.registerEffect(EffPurge.class, EffPurge.PATTERN);
-        EvtPreLog.register();
-        ExprPreLogUserName.register();
+
+        final @Nullable CoreProtectAPI api = loadCoreProtectAPI();
+        if (api == null) {
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        coreProtectAPI = api;
+
+        if (!Skript.isAcceptRegistrations()) {
+            getLogger().severe("Skript no longer accepts syntax registrations. " +
+                    "SkCoAPI has to be enabled while the server is starting up (do not load it with /reload or plugin managers).");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        final SkriptAddon addon = Skript.instance().registerAddon(SkCoAPI.class, getName());
+        addon.localizer().setSourceDirectories("lang", null);
+        addon.loadModules(new CoreProtectModule());
     }
 
-    public static void runTask(Runnable runnable) {
-        Bukkit.getScheduler().runTask(plugin, runnable);
+    private @Nullable CoreProtectAPI loadCoreProtectAPI() {
+        final @Nullable Plugin coreProtect = getServer().getPluginManager().getPlugin("CoreProtect");
+        // Check this before touching any CoreProtect class: the classes of a disabled plugin cannot be loaded,
+        // e.g. when CoreProtect has disabled itself because it does not support this Minecraft version.
+        if (coreProtect == null || !coreProtect.isEnabled()) {
+            getLogger().severe("CoreProtect is not enabled. SkCoAPI cannot work without CoreProtect. " +
+                    "Check the log above for why CoreProtect failed to start.");
+            return null;
+        }
+        if (!(coreProtect instanceof CoreProtect)) {
+            getLogger().severe("The plugin named CoreProtect is not CoreProtect by PlayPro.");
+            return null;
+        }
+
+        final CoreProtectAPI api = ((CoreProtect)coreProtect).getAPI();
+        if (!api.isEnabled()) {
+            getLogger().warning("CoreProtect API is not enabled. Check 'api-enabled' in the config of CoreProtect.");
+        }
+
+        final int apiVersion = api.APIVersion();
+        if (apiVersion < MINIMUM_API_VERSION) {
+            getLogger().warning("CoreProtect API version is expected to be " + MINIMUM_API_VERSION +
+                    " or over but is " + apiVersion + ".");
+        }
+        return api;
     }
 
-    public static void runTaskAsynchronously(Runnable runnable) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+    /**
+     * Runs a task on the main thread, unless this plugin has already been disabled.
+     */
+    public static void runTask(@NotNull Runnable runnable) {
+        if (plugin.isEnabled()) {
+            Bukkit.getScheduler().runTask(plugin, runnable);
+        }
+    }
+
+    /**
+     * Runs a task asynchronously, unless this plugin has already been disabled.
+     */
+    public static void runTaskAsynchronously(@NotNull Runnable runnable) {
+        if (plugin.isEnabled()) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+        }
+    }
+
+    public static @NotNull SkCoAPI getPlugin() {
+        return plugin;
     }
 
     public static @NotNull CoreProtectAPI getCoreProtectAPI() {
-        if (SkCoAPI.coreProtectAPI != null) {
-            return SkCoAPI.coreProtectAPI;
+        if (coreProtectAPI == null) {
+            throw new IllegalStateException("SkCoAPI is not enabled");
         }
-
-        @Nullable Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CoreProtect");
-
-        if (!(plugin instanceof CoreProtect)) {
-            Bukkit.getLogger().warning("CoreProtect not loaded.");
-            Bukkit.getLogger().warning("Cannot continue because CoreProtect does not exist.");
-        }
-
-        assert plugin instanceof CoreProtect;
-        @NotNull CoreProtectAPI coreProtectAPI = ((CoreProtect)plugin).getAPI();
-        if (!coreProtectAPI.isEnabled()) {
-            SkCoAPI.plugin.getLogger().warning("CoreProtect API not enabled.");
-        }
-
-        final int apiVersion = coreProtectAPI.APIVersion();
-        if (apiVersion < 9) {
-            Bukkit.getLogger().warning(
-                    () -> "CoreProtect API version expected to be 9 or over but is " + apiVersion + "."
-            );
-        }
-
-        SkCoAPI.coreProtectAPI = coreProtectAPI;
         return coreProtectAPI;
     }
 

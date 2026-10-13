@@ -5,8 +5,9 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import net.coreprotect.CoreProtectAPI;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Action String")
 @Description("Get the action as a string. (Removal, Placement, Interaction)")
@@ -15,6 +16,10 @@ import org.jetbrains.annotations.NotNull;
 public class ExprActionString extends LogPropertyExpression<String> {
 
     private static final String PROPERTY_NAME = "[CoreProtect] action [(string|text)][s]";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registerProperty(registry, ExprActionString.class, String.class, PROPERTY_NAME, ExprActionString::new);
+    }
 
     @Override
     protected @NotNull String getPropertyName() {
@@ -29,10 +34,6 @@ public class ExprActionString extends LogPropertyExpression<String> {
     @Override
     public @Nullable String convert(CoreProtectAPI.ParseResult parseResult) {
         return parseResult.getActionString();
-    }
-
-    public static void register() {
-        register(ExprActionString.class, String.class, PROPERTY_NAME);
     }
 
 }

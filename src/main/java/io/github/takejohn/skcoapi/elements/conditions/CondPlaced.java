@@ -5,9 +5,12 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import io.github.takejohn.skcoapi.SkCoAPI;
+import org.bukkit.block.Block;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Has Placed/Built")
 @Description("Checks if a user has already placed a block at the location within the specified time limit.")
@@ -15,8 +18,11 @@ import org.jetbrains.annotations.NotNull;
 @RequiredPlugins("CoreProtect")
 public class CondPlaced extends ActedCondition {
 
-    public static final String PATTERN =
-            "%string% has[1¦(n't| not)] (placed|built) %block% in [last] %timespan% [(until|till) %-timespan%]";
+    public static final String PATTERN = pattern("(placed|built)");
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.CONDITION, SyntaxInfo.simple(CondPlaced.class, CondPlaced::new, PATTERN));
+    }
 
     @Override
     public @NotNull String toString(@Nullable Event e, boolean debug) {
@@ -26,8 +32,8 @@ public class CondPlaced extends ActedCondition {
     }
 
     @Override
-    public boolean checkBeforeNegated(@NotNull Event e) {
-        return SkCoAPI.getCoreProtectAPI().hasPlaced(getUser(e), getBlock(e), getTimeAsSeconds(e), getOffsetAsSeconds(e));
+    protected boolean hasActed(@NotNull String user, @NotNull Block block, int time, int offset) {
+        return SkCoAPI.getCoreProtectAPI().hasPlaced(user, block, time, offset);
     }
 
 }

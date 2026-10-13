@@ -1,18 +1,23 @@
 package io.github.takejohn.skcoapi.elements.expressions;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.classes.Changer;
-import ch.njol.skript.doc.*;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Events;
+import ch.njol.skript.doc.Example;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import ch.njol.util.coll.CollectionUtils;
 import net.coreprotect.event.CoreProtectPreLogEvent;
 import org.bukkit.event.Event;
-import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.skriptlang.skript.registration.SyntaxInfo;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("User/Player Name")
 @Events("CoreProtect logging")
@@ -24,14 +29,27 @@ import org.jetbrains.annotations.NotNull;
 })
 @Since("0.1.0")
 @RequiredPlugins("CoreProtect")
-@Examples({
-        "on CoreProtect logging:",
-        "    if username parsed as offlineplayer is op:",
-        "        cancel event"
-})
+@Example("""
+        on CoreProtect logging:
+            if username parsed as offlineplayer is op:
+                cancel event
+        """)
+@Example("""
+        on CoreProtect logging:
+            set user name to "%user name%'s hand"
+        """)
 public class ExprPreLogUserName extends SimpleExpression<String> {
 
     public static final String PATTERN = "[the] (user[ ]|player )name";
+
+    public static void register(@NotNull SyntaxRegistry registry) {
+        registry.register(SyntaxRegistry.EXPRESSION,
+                SyntaxInfo.Expression.builder(ExprPreLogUserName.class, String.class)
+                        .priority(SyntaxInfo.SIMPLE)
+                        .supplier(ExprPreLogUserName::new)
+                        .addPattern(PATTERN)
+                        .build());
+    }
 
     @Override
     public @NotNull Class<? extends String> getReturnType() {
@@ -56,11 +74,14 @@ public class ExprPreLogUserName extends SimpleExpression<String> {
 
     @Override
     protected String @NotNull[] get(@NotNull Event e) {
-        return new String[]{((CoreProtectPreLogEvent)e).getUser()};
+        if (!(e instanceof CoreProtectPreLogEvent preLogEvent)) {
+            return new String[0];
+        }
+        return new String[]{preLogEvent.getUser()};
     }
 
     @Override
-    public @NotNull Class<?> @Nullable[] acceptChange(Changer.@NotNull ChangeMode mode) {
+    public Class<?> @Nullable[] acceptChange(Changer.@NotNull ChangeMode mode) {
         if (mode == Changer.ChangeMode.SET) {
             return CollectionUtils.array(String.class);
         }
@@ -69,14 +90,14 @@ public class ExprPreLogUserName extends SimpleExpression<String> {
 
     @Override
     public void change(@NotNull Event e, Object @Nullable[] delta, Changer.@NotNull ChangeMode mode) {
-        final String newUser = delta != null ? (String)delta[0] : null;
-        if (newUser != null) {
-            ((CoreProtectPreLogEvent)e).setUser(newUser);
+        if (!(e instanceof CoreProtectPreLogEvent preLogEvent)) {
+            return;
         }
-    }
-
-    public static void register() {
-        Skript.registerExpression(ExprPreLogUserName.class, String.class, ExpressionType.SIMPLE, PATTERN);
+        final String newUser = delta != null ? (String)delta[0] : null;
+        // CoreProtect rejects empty user names.
+        if (newUser != null && !newUser.isEmpty()) {
+            preLogEvent.setUser(newUser);
+        }
     }
 
 }

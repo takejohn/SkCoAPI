@@ -1,9 +1,13 @@
 package io.github.takejohn.skcoapi.elements.sections;
 
-import ch.njol.skript.Skript;
-import ch.njol.skript.doc.*;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Example;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.Since;
 import io.github.takejohn.skcoapi.util.DetailPerformance;
 import org.jetbrains.annotations.NotNull;
+import org.skriptlang.skript.registration.SyntaxRegistry;
 
 @Name("Lookup")
 @Description({
@@ -14,16 +18,16 @@ import org.jetbrains.annotations.NotNull;
 })
 @Since("0.3.0")
 @RequiredPlugins("CoreProtect")
-@Examples({
-        "lookup logs in a month in radius 5 at location of player:",
-        "    set {_lookup::*} to results"
-})
+@Example("""
+        lookup logs in a month in radius 5 at location of player:
+            set {_lookup::*} to results
+        """)
 public class EffSecLookup extends PerformanceEffectSection {
 
     private static final DetailPerformance LOOKUP = DetailPerformance.LOOKUP;
 
-    public static void register() {
-        Skript.registerSection(EffSecLookup.class, LOOKUP.syntaxPattern());
+    public static void register(@NotNull SyntaxRegistry registry) {
+        register(registry, EffSecLookup.class, EffSecLookup::new, LOOKUP);
     }
 
     @Override
